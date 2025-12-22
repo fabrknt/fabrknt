@@ -38,10 +38,14 @@ A high-velocity liquidity engine that finds the smoothest path for asset movemen
 -   Integrated multi-DEX routing for automated rebalancing.
 -   Low-latency execution for high-frequency strategies.
 
-### 4. 🛰️ Pulsar Index (Core: `pulsar`)
+### 4. 🛰️ Pulsar (Core: `pulsar`)
 
-**The Weaver’s Eye.**
-Real-time indexing and observability, providing the structural data needed to inform the next move.
+**The Risk Oracle.**
+AI-driven risk assessment gateway providing institutional-grade metrics for RWA and asset integrity validation.
+
+-   Real-time risk data via pay-per-call API (x402 protocol)
+-   Legal compliance and counterparty risk assessment
+-   Oracle integrity validation for autonomous decision-making
 
 ---
 
@@ -96,7 +100,7 @@ Fabricant is an open-source initiative for the Solana builder community.
 -   [x-liquidity-engine](https://github.com/psyto/x-liquidity-engine) - The Liquidity Backbone
 -   [sol-ops-guard](https://github.com/psyto/sol-ops-guard) - Security & Compliance
 -   [solfabric](https://github.com/psyto/solfabric) - Parallel Execution Logic
--   [pulsar](https://github.com/psyto/pulsar) - On-Chain Data Intelligence
+-   [pulsar](https://github.com/psyto/pulsar) - RWA Risk Oracle & Integrity Gateway
 
 ---
 

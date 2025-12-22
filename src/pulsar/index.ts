@@ -1,11 +1,24 @@
 /**
- * Pulsar Index - The Weaver's Eye
- * Real-time indexing and observability for structural data.
+ * Pulsar - The Risk Oracle
+ * AI-driven risk assessment gateway for RWA and asset integrity validation.
+ * Provides institutional-grade risk metrics via pay-per-call API (x402 protocol).
  */
 
-export class PulsarIndex {
-  // Placeholder for pulsar logic
-  public static async index(): Promise<void> {
-    // Implementation will come from datasov2 & pulsar integration
+export class Pulsar {
+  /**
+   * Query risk metrics for a given asset or protocol
+   * @returns Risk assessment data including compliance, counterparty risk, and oracle integrity
+   */
+  public static async getRiskMetrics(assetAddress?: string): Promise<unknown> {
+    // Implementation will integrate with Pulsar RWA Risk Gateway
+    // Uses x402 protocol for micropayment-based risk data access
+    return {
+      // Placeholder response
+      asset: assetAddress,
+      riskScore: null,
+      complianceStatus: null,
+      counterpartyRisk: null,
+      oracleIntegrity: null,
+    };
   }
 }

@@ -10,7 +10,7 @@ export { Fabricant } from './core/fabricant';
 export { Guard, PatternId, Severity } from './guard';
 export { Loom } from './loom';
 export { FabricCore } from './fabric';
-export { PulsarIndex } from './pulsar';
+export { Pulsar } from './pulsar';
 
 // Types
 export type {
