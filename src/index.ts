@@ -141,3 +141,83 @@ export type {
     /** Configuration for Privacy (Arbor) integration */
     PrivacyConfig,
 } from "./types";
+
+/**
+ * Pattern Library - Pre-built execution templates for common use cases.
+ *
+ * Provides ready-to-use patterns for AI trading agents and DAO treasury management.
+ *
+ * ## AI Trading Agent Patterns:
+ * - **GridTradingPattern**: Automated grid trading strategy
+ * - **DCAStrategy**: Dollar cost averaging automation
+ * - **ArbitragePattern**: Multi-DEX arbitrage execution
+ *
+ * ## DAO Treasury Patterns:
+ * - **TreasuryRebalancing**: Maintain target asset allocations
+ * - **YieldFarmingPattern**: Optimize yields across protocols
+ *
+ * ## DeFi Protocol Patterns:
+ * - **SwapPattern**: Multi-route swap optimization
+ * - **LiquidityPattern**: Automated liquidity provision
+ *
+ * @example
+ * ```typescript
+ * import { GridTradingPattern, Guard } from "@fabriquant/sdk";
+ *
+ * const pattern = new GridTradingPattern({
+ *   name: 'SOL-USDC Grid',
+ *   pair: { base: solToken, quote: usdcToken },
+ *   lowerBound: 90,
+ *   upperBound: 110,
+ *   gridLevels: 10,
+ *   amountPerGrid: 1,
+ *   currentPrice: { token: 'SOL', price: 100, quoteCurrency: 'USDC', timestamp: Date.now() },
+ *   guard: new Guard({ mode: 'block', maxSlippage: 0.02 }),
+ * });
+ *
+ * const result = await pattern.execute();
+ * ```
+ */
+export {
+    // Base pattern classes
+    ExecutionPattern,
+    PatternRegistry,
+    // AI Agent Patterns
+    GridTradingPattern,
+    DCAStrategy,
+    ArbitragePattern,
+    // DAO Treasury Patterns
+    TreasuryRebalancing,
+    YieldFarmingPattern,
+    // DeFi Protocol Patterns
+    SwapPattern,
+    LiquidityPattern,
+} from "./patterns";
+
+export type {
+    // Base pattern types
+    PatternConfig,
+    PatternResult,
+    PatternMetrics,
+    Token,
+    Price,
+    TradingPair,
+    ExecutionStrategy,
+    // AI Agent Pattern types
+    GridTradingConfig,
+    DCAConfig,
+    ArbitrageConfig,
+    ArbitrageOpportunity,
+    DEX,
+    // DAO Treasury Pattern types
+    RebalancingConfig,
+    AssetAllocation,
+    YieldFarmingConfig,
+    YieldProtocol,
+    // DeFi Protocol Pattern types
+    SwapConfig,
+    SwapRoute,
+    LiquidityConfig,
+    LiquidityPool,
+    LiquidityPosition,
+} from "./patterns";
