@@ -151,7 +151,7 @@ As a solopreneur-led project, we value developer feedback and contributions.
 * [x-liquidity-engine](https://github.com/psyto/x-liquidity-engine) - The Liquidity Backbone
 * [sol-ops-guard](https://github.com/psyto/sol-ops-guard) - Security & Compliance
 * [solfabric](https://github.com/psyto/solfabric) - Parallel Execution Logic
-* [pulsar](https://github.com/psyto/pulsar) - Intelligence Layer
+* [pulsar](https://github.com/psyto/pulsar) - On-Chain Data Intelligence
 
 ---
 
