@@ -38,7 +38,17 @@ Structures on-chain data in milliseconds, providing the "Ground Truth" for agent
 
 ---
 
-## 🛠️ Quick Start (Developer Preview)
+## 🛠️ Quick Start
+
+### Installation
+
+```bash
+npm install @aegis-flow/sdk
+# or
+yarn add @aegis-flow/sdk
+```
+
+### Usage
 
 ```typescript
 import { AegisFlow, Guardian, FlowEngine } from '@aegis-flow/sdk';
@@ -58,17 +68,72 @@ const tx = await FlowEngine.build({
 
 // 3. Execute with Military-Grade Protection
 await AegisFlow.execute(tx, { guardian });
-
 ```
+
+> **Note:** The SDK is currently in active development. Core functionality is being integrated from standalone repositories.
 
 ---
 
 ## 🗺️ Roadmap: 2025-2026
 
-* [ ] **Phase 1: SDK Integration** - Consolidating standalone repos into `@aegis-flow/sdk` (In Progress).
+* [x] **Phase 1.0: SDK Foundation** ✅ - TypeScript SDK structure with build tooling, testing, and core module scaffolding.
+* [ ] **Phase 1.1: SDK Integration** - Integrating functionality from standalone repos (`sol-ops-guard`, `x-liquidity-engine`, etc.).
 * [ ] **Phase 2: Agent Connect** - Official plugins for major AI frameworks (ElizaOS, Rig, etc.).
 * [ ] **Phase 3: Aegis Vaults** - Launching autonomous, AI-managed high-yield index products.
 * [ ] **Phase 4: Decentralized Governance** - Transitioning to a DAO-led security registry based on Guardian logic.
+
+---
+
+## 💻 Development
+
+### Project Structure
+
+```
+src/
+├── core/          # AegisFlow main execution class
+├── guardian/      # Safety Layer (sol-ops-guard integration)
+├── flow-engine/   # Liquidity Layer (x-liquidity-engine integration)
+├── fabric/        # Performance Layer (solfabric & arbor integration)
+├── pulsar/        # Intelligence Layer (datasov2 & pulsar integration)
+├── types/         # TypeScript type definitions
+└── index.ts       # SDK entry point
+```
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/psyto/aegisflow.git
+cd aegisflow
+
+# Install dependencies
+npm install
+
+# Build the SDK
+npm run build
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Lint code
+npm run lint
+
+# Type check
+npm run typecheck
+```
+
+### Available Scripts
+
+- `npm run build` - Build the SDK for production
+- `npm run dev` - Watch mode for development
+- `npm test` - Run tests
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run lint` - Check code quality
+- `npm run lint:fix` - Auto-fix linting issues
+- `npm run typecheck` - Type check without building
 
 ---
 
@@ -76,7 +141,7 @@ await AegisFlow.execute(tx, { guardian });
 
 As a solopreneur-led project, we value developer feedback and contributions.
 
-* **Builders:** Feel free to open Issues or PRs in our core repositories.
+* **Builders:** Feel free to open Issues or PRs in this repository.
 * **Ecosystem:** We are actively seeking collaboration with AI Agent projects and DeFi protocols.
 
 ---
