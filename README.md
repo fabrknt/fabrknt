@@ -38,26 +38,23 @@ A high-velocity liquidity engine that finds the smoothest path for asset movemen
 -   Integrated multi-DEX routing for automated rebalancing.
 -   Low-latency execution for high-frequency strategies.
 
-### 4. 🛰️ Pulsar (Core: `pulsar`)
+### 4. 🧭 Fabric Pulse (Core: `pulsar`)
 
-**The Risk Oracle.**
-AI-driven risk assessment gateway providing institutional-grade metrics for RWA and asset integrity validation.
+**The Quality Gauge.**
+An AI-driven risk assessment gateway providing institutional-grade metrics for asset integrity and RWA validation.
 
--   **Real-time Risk Assessment:** Risk scores, compliance status, counterparty risk, and oracle integrity
--   **Intelligent Caching:** Configurable TTL to minimize API calls
--   **Batch Processing:** Assess multiple assets simultaneously
--   **Fallback Support:** Graceful degradation when API unavailable
--   **Guard Integration:** Automatic risk checks in transaction validation flow
+-   **Real-time Risk Assessment:** Continuous monitoring of risk scores, compliance status, and oracle integrity.
+-   **Intelligent Caching:** Configurable TTL to maximize performance and minimize API overhead.
+-   **Guard Integration:** Seamlessly feeds data into Fabric Guard for automated transaction blocking.
 
-### 5. 🌲 Arbor (Privacy Layer)
+### 5. 🌿 Fabric Weave (Core: `arbor`)
 
-**The Shielded State Middleware.**
-ZK Compression integration for privacy-enabled and cost-efficient transaction execution.
+**The Hidden Stitch.**
+A privacy and scaling layer utilizing ZK Compression for shielded, cost-efficient transaction execution.
 
--   **ZK Compression:** 99.98% cost reduction for token account creation
--   **Privacy by Default:** Shielded state management using Sparse Binary Merkle Trees
--   **Cost Estimation:** Built-in tools to calculate compression savings
--   **Private Execution:** Dedicated API for privacy-enabled transactions
+-   **ZK Compression:** Massive cost reduction for state storage and account creation via Sparse Binary Merkle Trees.
+-   **Privacy by Default:** Shielded state management to ensure transaction confidentiality.
+-   **Efficient Execution:** Dedicated API designed for privacy-enabled operations without sacrificing speed.
 
 ---
 
