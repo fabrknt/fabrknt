@@ -2,7 +2,7 @@
 
 **Secure. Parallel. Optimized. The foundational infrastructure for AI Agents and Autonomous Protocols on Solana.**
 
-[Documentation](https://docs.aegis-flow.io) | [X (Twitter)](https://x.com/your_handle) | [Whitepaper](https://aegis-flow.io/whitepaper)
+[Documentation](https://docs.aegis-flow.io) | [X (Twitter)](https://x.com/psyto) | [Whitepaper](https://aegis-flow.io/whitepaper)
 
 ---
 
