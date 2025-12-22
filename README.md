@@ -1,73 +1,73 @@
-# 🛡️ Fabricant: The Autonomous Execution Stack for Solana
+# 🛠️ Fabricant: The Precision Execution Stack for Solana
 
-**Secure. Parallel. Optimized. The foundational infrastructure for AI Agents and Autonomous Protocols on Solana.**
+**Engineered for Parallelism. Built for Autonomy. Woven for Speed.**
+
+Fabricant is a unified development stack designed to master Solana's Sealevel runtime. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision.
 
 [Documentation](https://github.com/psyto/fabricant) | [X (Twitter)](https://x.com/psyto)
 
 ---
 
-## 🚀 Mission
-To unlock the full potential of Solana's parallel execution (Sealevel) while providing "Military-Grade Security" for autonomous programs. Fabricant bridges the gap between raw blockchain performance and the safety requirements of AI-driven finance.
+## 🧵 The Philosophy: "Weaving the Transaction Layer"
 
-## 📦 The Fabricant Stack
-Fabricant integrates high-performance modular components into a unified execution OS for developers.
+In a parallel world, transactions are no longer a linear chain—they are a complex fabric. **Fabricant** provides the tools to design, optimize, and secure this fabric, ensuring that every thread (transaction) is executed with maximum efficiency and zero conflict.
 
-### 1. 🛡️ Guardian (Core: `sol-ops-guard`)
-**The Safety Layer.**
-Prevents unauthorized drain, excessive slippage, or malicious CPI calls in real-time.
-- Deterministic runtime constraints for autonomous agents.
-- Programmable "Guardrails" to prevent catastrophic AI logic errors.
+## 📦 The Fabricant Suite
 
-### 2. ⚡ Flow Engine (Core: `x-liquidity-engine`)
-**The Yield & Liquidity Layer.**
-Aggregates liquidity across the Solana ecosystem to ensure the fastest, lowest-cost asset movement.
-- Multi-DEX aggregation and smart routing.
-- Autonomous yield-optimization algorithms.
+### 1. 🧵 Fabric Core (Core: `solfabric`)
 
-### 3. 🧵 Fabric Core (Core: `solfabric`)
-**The Performance Layer.**
-A framework optimized for Solana's parallel runtime to maximize throughput and minimize contention.
-- Automatic conflict avoidance for high-frequency transactions.
-- Structured state management to reduce Compute Unit (CU) consumption.
+**The Advanced Loom.**
+A framework that structures state management and transaction bundling to eliminate lock contention.
 
-### 4. 🛰️ Pulsar Insight (Core: `pulsar`)
-**The Intelligence Layer.**
-Structures on-chain data in milliseconds, providing the "Ground Truth" for agentic decision-making.
-- Real-time event streaming and anomaly detection.
-- Advanced indexing for complex on-chain states.
+-   **Parallel Optimization:** Maximizes throughput using custom data structures.
+-   **Compute Efficiency:** Minimizes CU usage through optimized instruction routing.
+
+### 2. 🛡️ Fabric Guard (Core: `sol-ops-guard`)
+
+**The Quality Control.**
+An on-chain safety layer that ensures the integrity of every woven transaction.
+
+-   **Execution Constraints:** Hardened boundaries for autonomous agent operations.
+-   **Anti-Drain Logic:** Real-time monitoring to prevent unauthorized capital flight.
+
+### 3. ⚡ Flow Module (Core: `x-liquidity-engine`)
+
+**The Silk Path.**
+A high-velocity liquidity engine that finds the smoothest path for asset movement across the ecosystem.
+
+-   Integrated multi-DEX routing for automated rebalancing.
+-   Low-latency execution for high-frequency strategies.
+
+### 4. 🛰️ Pulsar Index (Core: `pulsar`)
+
+**The Weaver’s Eye.**
+Real-time indexing and observability, providing the structural data needed to inform the next move.
 
 ---
 
-## 🛠️ Quick Start
-
-### Installation
-
-```bash
-npm install @fabricant/sdk
-# or
-yarn add @fabricant/sdk
-```
-
-### Usage
+## 🛠️ Developer Preview: Weaving a Secure Transaction
 
 ```typescript
-import { Fabricant, Guardian, FlowEngine } from '@fabricant/sdk';
+import { Fabricant, Guard, Loom } from "@fabricant/sdk";
 
-// 1. Initialize the Safety Guard to protect assets
-const guardian = new Guardian({
-  maxSlippage: 0.5,
-  emergencyStop: true, // Auto-halts if anomalous behavior is detected
+// 1. Initialize the Precision Guard
+const guard = new Guard({
+    safetyLevel: "High",
+    maxSlippage: 0.1,
+    allowedPrograms: ["Jupiter", "Raydium"],
 });
 
-// 2. Build High-Performance Transaction optimized for Sealevel
-const tx = await FlowEngine.build({
-  action: 'SWAP',
-  pair: ['SOL', 'USDC'],
-  priority: 'Ultra', // Leveraging Fabric Core for parallel execution
+// 2. Weave an optimized parallel transaction
+const tx = await Loom.weave({
+    type: "MULTI_ROUTE_SWAP",
+    input: "SOL",
+    output: "USDC",
+    amount: 50,
+    parallelPriority: true, // Enabled by Fabric Core
 });
 
-// 3. Execute with Military-Grade Protection
-await Fabricant.execute(tx, { guardian });
+// 3. Execute with Fabricant Precision
+await Fabricant.execute(tx, { with: guard });
 ```
 
 > **Note:** The SDK is currently in active development. Core functionality is being integrated from standalone repositories.
@@ -76,83 +76,29 @@ await Fabricant.execute(tx, { guardian });
 
 ## 🗺️ Roadmap: 2025-2026
 
-* [x] **Phase 1.0: SDK Foundation** ✅ - TypeScript SDK structure with build tooling, testing, and core module scaffolding.
-* [ ] **Phase 1.1: SDK Integration** - Integrating functionality from standalone repos (`sol-ops-guard`, `x-liquidity-engine`, etc.).
-* [ ] **Phase 2: Agent Connect** - Official plugins for major AI frameworks (ElizaOS, Rig, etc.).
-* [ ] **Phase 3: Fabricant Vaults** - Launching autonomous, AI-managed high-yield index products.
-* [ ] **Phase 4: Decentralized Governance** - Transitioning to a DAO-led security registry based on Guardian logic.
+-   **Phase 1: The Loom (SDK Consolidation)** - Merging core modules into `@fabricant/sdk`.
+-   **Phase 2: Pattern Library** - Pre-built execution templates for AI Trading Agents and DAO Treasury Management.
+-   **Phase 3: The Fabricant Mainnet** - A decentralized autonomous vault infrastructure leveraging the full stack.
 
 ---
 
-## 💻 Development
+## 🤝 Join the Atelier
 
-### Project Structure
+Fabricant is an open-source initiative for the Solana builder community.
 
-```
-src/
-├── core/          # Fabricant main execution class
-├── guardian/      # Safety Layer (sol-ops-guard integration)
-├── flow-engine/   # Liquidity Layer (x-liquidity-engine integration)
-├── fabric/        # Performance Layer (solfabric integration)
-├── pulsar/        # Intelligence Layer (pulsar integration)
-├── types/         # TypeScript type definitions
-└── index.ts       # SDK entry point
-```
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/psyto/fabricant.git
-cd fabricant
-
-# Install dependencies
-npm install
-
-# Build the SDK
-npm run build
-
-# Run tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Lint code
-npm run lint
-
-# Type check
-npm run typecheck
-```
-
-### Available Scripts
-
-- `npm run build` - Build the SDK for production
-- `npm run dev` - Watch mode for development
-- `npm test` - Run tests
-- `npm run test:coverage` - Run tests with coverage report
-- `npm run lint` - Check code quality
-- `npm run lint:fix` - Auto-fix linting issues
-- `npm run typecheck` - Type check without building
-
----
-
-## 🤝 Contributing
-
-As a solopreneur-led project, we value developer feedback and contributions.
-
-* **Builders:** Feel free to open Issues or PRs in this repository.
-* **Ecosystem:** We are actively seeking collaboration with AI Agent projects and DeFi protocols.
+-   **Builders:** Star our repos and contribute to the parallel execution revolution.
+-   **Projects:** Contact us for integration support for AI Agents and DeFi infrastructure.
 
 ---
 
 ## 🛠️ Core Repositories
 
-* [x-liquidity-engine](https://github.com/psyto/x-liquidity-engine) - The Liquidity Backbone
-* [sol-ops-guard](https://github.com/psyto/sol-ops-guard) - Security & Compliance
-* [solfabric](https://github.com/psyto/solfabric) - Parallel Execution Logic
-* [pulsar](https://github.com/psyto/pulsar) - On-Chain Data Intelligence
+-   [x-liquidity-engine](https://github.com/psyto/x-liquidity-engine) - The Liquidity Backbone
+-   [sol-ops-guard](https://github.com/psyto/sol-ops-guard) - Security & Compliance
+-   [solfabric](https://github.com/psyto/solfabric) - Parallel Execution Logic
+-   [pulsar](https://github.com/psyto/pulsar) - On-Chain Data Intelligence
 
 ---
 
-Developed with ❤️ by **Psyto** | Powered by **Solana**
+**Fabricant: Weaving the Future of Autonomous Finance.**
+Built with ❤️ by **psyto** | Powered by **Solana**

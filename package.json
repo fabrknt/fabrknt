@@ -1,7 +1,7 @@
 {
   "name": "@fabricant/sdk",
   "version": "0.1.0",
-  "description": "The Autonomous Execution Stack for Solana - Secure, Parallel, Optimized infrastructure for AI Agents and Autonomous Protocols",
+  "description": "The Precision Execution Stack for Solana - Engineered for Parallelism, Built for Autonomy, Woven for Speed",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

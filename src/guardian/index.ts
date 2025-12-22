@@ -1,21 +1,21 @@
 /**
- * Guardian - The Safety Layer
+ * Guard - The Safety Layer (Fabric Guard)
  * Prevents unauthorized drain, excessive slippage, or malicious CPI calls in real-time.
  */
 
 import type {
-  GuardianConfig,
+  GuardConfig,
   Transaction,
   ValidationResult,
   SecurityWarning,
 } from '../types';
 import { validateTransaction } from './validator';
 
-export class Guardian {
-  private config: GuardianConfig;
+export class Guard {
+  private config: GuardConfig;
   private warningHistory: SecurityWarning[] = [];
 
-  constructor(config: GuardianConfig = {}) {
+  constructor(config: GuardConfig = {}) {
     // Set default configuration
     this.config = {
       enablePatternDetection: true,
@@ -27,7 +27,7 @@ export class Guardian {
   }
 
   /**
-   * Validates a transaction against Guardian security rules
+   * Validates a transaction against Guard security rules
    */
   public validateTransaction(transaction: Transaction): ValidationResult {
     const result = validateTransaction(transaction, this.config);
@@ -51,16 +51,16 @@ export class Guardian {
   }
 
   /**
-   * Gets the current Guardian configuration
+   * Gets the current Guard configuration
    */
-  public getConfig(): GuardianConfig {
+  public getConfig(): GuardConfig {
     return { ...this.config };
   }
 
   /**
-   * Updates Guardian configuration
+   * Updates Guard configuration
    */
-  public updateConfig(updates: Partial<GuardianConfig>): void {
+  public updateConfig(updates: Partial<GuardConfig>): void {
     this.config = {
       ...this.config,
       ...updates,
@@ -106,6 +106,6 @@ export class Guardian {
   }
 }
 
-export type { GuardianConfig };
+export type { GuardConfig };
 export { PatternId, Severity } from '../types';
 export type { SecurityWarning, ValidationResult } from '../types';

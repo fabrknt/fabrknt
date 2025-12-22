@@ -1,8 +1,8 @@
-# Guardian - Security Layer Documentation
+# Fabric Guard - Security Layer Documentation
 
 ## Overview
 
-Guardian is the safety layer of the Fabricant SDK, designed to prevent unauthorized drain, excessive slippage, and malicious operations in Solana transactions. It provides real-time security pattern detection and configurable validation rules.
+Fabric Guard is the quality control layer of the Fabricant SDK, designed to prevent unauthorized drain, excessive slippage, and malicious operations in Solana transactions. It provides real-time security pattern detection and configurable validation rules.
 
 ## Features
 
@@ -23,13 +23,13 @@ npm install @fabricant/sdk
 ## Quick Start
 
 ```typescript
-import { Guardian } from '@fabricant/sdk';
+import { Guard } from '@fabricant/sdk';
 
-// Create a Guardian with default configuration
-const guardian = new Guardian();
+// Create a Guard with default configuration
+const guard = new Guard();
 
 // Validate a transaction
-const result = guardian.validateTransaction(transaction);
+const result = guard.validateTransaction(transaction);
 
 if (!result.isValid) {
   console.log('Transaction blocked:', result.blockedBy);
@@ -39,10 +39,10 @@ if (!result.isValid) {
 
 ## Configuration
 
-### GuardianConfig
+### GuardConfig
 
 ```typescript
-interface GuardianConfig {
+interface GuardConfig {
   // Slippage protection (percentage)
   maxSlippage?: number;
 
@@ -71,7 +71,7 @@ interface GuardianConfig {
 - Maximum security
 
 ```typescript
-const guardian = new Guardian({ riskTolerance: 'strict' });
+const guard = new Guard({ riskTolerance: 'strict' });
 ```
 
 #### Moderate (Default)
@@ -80,7 +80,7 @@ const guardian = new Guardian({ riskTolerance: 'strict' });
 - Balanced security and flexibility
 
 ```typescript
-const guardian = new Guardian({ riskTolerance: 'moderate' });
+const guard = new Guard({ riskTolerance: 'moderate' });
 ```
 
 #### Permissive
@@ -89,7 +89,7 @@ const guardian = new Guardian({ riskTolerance: 'moderate' });
 - For advanced users
 
 ```typescript
-const guardian = new Guardian({ riskTolerance: 'permissive' });
+const guard = new Guard({ riskTolerance: 'permissive' });
 ```
 
 ### Operation Modes
@@ -98,19 +98,19 @@ const guardian = new Guardian({ riskTolerance: 'permissive' });
 Prevents dangerous transactions from executing:
 
 ```typescript
-const guardian = new Guardian({ mode: 'block' });
+const guard = new Guard({ mode: 'block' });
 ```
 
 #### Warn Mode
 Allows all transactions but logs warnings:
 
 ```typescript
-const guardian = new Guardian({ mode: 'warn' });
+const guard = new Guard({ mode: 'warn' });
 ```
 
 ## Security Patterns
 
-Guardian detects 4 critical security patterns based on `sol-ops-guard`:
+Guard detects 4 critical security patterns based on `sol-ops-guard`:
 
 ### P-101: Mint Kill 🔴 CRITICAL
 **Description**: Permanently disabling mint authority
@@ -168,15 +168,15 @@ Guardian detects 4 critical security patterns based on `sol-ops-guard`:
 
 ## API Reference
 
-### Guardian Class
+### Guard Class
 
 #### Constructor
 
 ```typescript
-constructor(config?: GuardianConfig)
+constructor(config?: GuardConfig)
 ```
 
-Creates a new Guardian instance with optional configuration.
+Creates a new Guard instance with optional configuration.
 
 #### Methods
 
@@ -185,7 +185,7 @@ Creates a new Guardian instance with optional configuration.
 validateTransaction(transaction: Transaction): ValidationResult
 ```
 
-Validates a transaction against all Guardian rules.
+Validates a transaction against all Guard rules.
 
 **Returns**: `ValidationResult`
 - `isValid`: boolean - Whether transaction passes validation
@@ -201,17 +201,17 @@ Legacy validation method. Returns `true` if valid, `false` otherwise.
 
 ##### getConfig()
 ```typescript
-getConfig(): GuardianConfig
+getConfig(): GuardConfig
 ```
 
-Returns the current Guardian configuration.
+Returns the current Guard configuration.
 
 ##### updateConfig()
 ```typescript
-updateConfig(updates: Partial<GuardianConfig>): void
+updateConfig(updates: Partial<GuardConfig>): void
 ```
 
-Updates Guardian configuration at runtime.
+Updates Guard configuration at runtime.
 
 ##### activateEmergencyStop()
 ```typescript
@@ -239,7 +239,7 @@ Checks if slippage is within acceptable limits.
 getWarningHistory(): SecurityWarning[]
 ```
 
-Returns all warnings detected since Guardian creation.
+Returns all warnings detected since Guard creation.
 
 ##### clearWarningHistory()
 ```typescript
@@ -253,14 +253,14 @@ Clears the warning history.
 ### Basic Validation
 
 ```typescript
-import { Guardian } from '@fabricant/sdk';
+import { Guard } from '@fabricant/sdk';
 
-const guardian = new Guardian({
+const guard = new Guard({
   maxSlippage: 1.0,
   riskTolerance: 'moderate',
 });
 
-const result = guardian.validateTransaction(tx);
+const result = guard.validateTransaction(tx);
 
 if (result.isValid) {
   // Safe to proceed
@@ -276,22 +276,22 @@ if (result.isValid) {
 ### Emergency Stop
 
 ```typescript
-const guardian = new Guardian();
+const guard = new Guard();
 
 // In case of security incident
-guardian.activateEmergencyStop();
+guard.activateEmergencyStop();
 
 // All transactions will be blocked
-const result = guardian.validate(); // false
+const result = guard.validate(); // false
 
 // Resume when safe
-guardian.deactivateEmergencyStop();
+guard.deactivateEmergencyStop();
 ```
 
 ### Custom Rules
 
 ```typescript
-const guardian = new Guardian({
+const guard = new Guard({
   customRules: [
     {
       id: 'max-value',
@@ -309,10 +309,10 @@ const guardian = new Guardian({
 ### Slippage Protection
 
 ```typescript
-const guardian = new Guardian({ maxSlippage: 0.5 }); // 0.5%
+const guard = new Guard({ maxSlippage: 0.5 }); // 0.5%
 
 // Before swap execution
-if (!guardian.isSlippageAcceptable(actualSlippage)) {
+if (!guard.isSlippageAcceptable(actualSlippage)) {
   throw new Error('Slippage exceeds limit');
 }
 ```
@@ -320,15 +320,15 @@ if (!guardian.isSlippageAcceptable(actualSlippage)) {
 ### Monitoring Warnings
 
 ```typescript
-const guardian = new Guardian();
+const guard = new Guard();
 
 // Validate multiple transactions
-guardian.validateTransaction(tx1);
-guardian.validateTransaction(tx2);
-guardian.validateTransaction(tx3);
+guard.validateTransaction(tx1);
+guard.validateTransaction(tx2);
+guard.validateTransaction(tx3);
 
 // Review all warnings
-const warnings = guardian.getWarningHistory();
+const warnings = guard.getWarningHistory();
 console.log(`Total warnings: ${warnings.length}`);
 
 warnings.forEach(warning => {
@@ -339,20 +339,20 @@ warnings.forEach(warning => {
 ## Integration with Fabricant
 
 ```typescript
-import { Fabricant, Guardian } from '@fabricant/sdk';
+import { Fabricant, Guard } from '@fabricant/sdk';
 
-const guardian = new Guardian({
+const guard = new Guard({
   maxSlippage: 1.0,
   emergencyStop: false,
 });
 
-// Guardian is automatically used by Fabricant.execute()
-await Fabricant.execute(tx, { guardian });
+// Guard is automatically used by Fabricant.execute()
+await Fabricant.execute(tx, { with: guard });
 ```
 
 ## Best Practices
 
-1. **Always use Guardian in production** - Even in permissive mode
+1. **Always use Guard in production** - Even in permissive mode
 2. **Set appropriate risk tolerance** - Balance security with flexibility
 3. **Monitor warning history** - Review patterns regularly
 4. **Implement emergency procedures** - Have a plan for activateEmergencyStop()
@@ -363,7 +363,7 @@ await Fabricant.execute(tx, { guardian });
 
 ```typescript
 import type {
-  GuardianConfig,
+  GuardConfig,
   ValidationResult,
   SecurityWarning,
   ValidationRule,

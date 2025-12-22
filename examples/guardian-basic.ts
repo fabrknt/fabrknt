@@ -1,63 +1,63 @@
 /**
- * Basic Guardian Usage Example
+ * Basic Guard Usage Example
  *
- * This example demonstrates how to use the Guardian module for
+ * This example demonstrates how to use the Guard module for
  * transaction validation and security pattern detection.
  */
 
 import {
-  Guardian,
+  Guard,
   PatternId,
   Severity,
   type Transaction,
   type ValidationResult,
 } from '@fabricant/sdk';
 
-// Example 1: Basic Guardian with Default Configuration
-function basicGuardian() {
-  console.log('=== Example 1: Basic Guardian ===\n');
+// Example 1: Basic Guard with Default Configuration
+function basicGuard() {
+  console.log('=== Example 1: Basic Guard ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   const tx: Transaction = {
     id: 'tx-001',
     status: 'pending',
   };
 
-  const result = guardian.validateTransaction(tx);
+  const result = guard.validateTransaction(tx);
   console.log('Validation Result:', result.isValid);
   console.log('Warnings:', result.warnings.length);
 }
 
-// Example 2: Guardian with Slippage Protection
+// Example 2: Guard with Slippage Protection
 function slippageProtection() {
   console.log('\n=== Example 2: Slippage Protection ===\n');
 
-  const guardian = new Guardian({
+  const guard = new Guard({
     maxSlippage: 1.0, // 1% maximum slippage
   });
 
   // Check if slippage is acceptable
-  console.log('0.5% slippage:', guardian.isSlippageAcceptable(0.5)); // true
-  console.log('1.5% slippage:', guardian.isSlippageAcceptable(1.5)); // false
+  console.log('0.5% slippage:', guard.isSlippageAcceptable(0.5)); // true
+  console.log('1.5% slippage:', guard.isSlippageAcceptable(1.5)); // false
 }
 
 // Example 3: Emergency Stop Mechanism
 function emergencyStop() {
   console.log('\n=== Example 3: Emergency Stop ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   // Normal operation
-  console.log('Normal operation:', guardian.validate());
+  console.log('Normal operation:', guard.validate());
 
   // Activate emergency stop
-  guardian.activateEmergencyStop();
-  console.log('After emergency stop:', guardian.validate());
+  guard.activateEmergencyStop();
+  console.log('After emergency stop:', guard.validate());
 
   // Deactivate
-  guardian.deactivateEmergencyStop();
-  console.log('After deactivation:', guardian.validate());
+  guard.deactivateEmergencyStop();
+  console.log('After deactivation:', guard.validate());
 }
 
 // Example 4: Risk Tolerance Levels
@@ -65,28 +65,28 @@ function riskTolerance() {
   console.log('\n=== Example 4: Risk Tolerance Levels ===\n');
 
   // Strict mode - blocks all critical patterns
-  const strictGuardian = new Guardian({
+  const strictGuard = new Guard({
     riskTolerance: 'strict',
     mode: 'block',
   });
 
   // Moderate mode - blocks only critical patterns
-  const moderateGuardian = new Guardian({
+  const moderateGuard = new Guard({
     riskTolerance: 'moderate',
     mode: 'block',
   });
 
   // Permissive mode - blocks only irreversible operations
-  const permissiveGuardian = new Guardian({
+  const permissiveGuard = new Guard({
     riskTolerance: 'permissive',
     mode: 'block',
   });
 
-  console.log('Strict config:', strictGuardian.getConfig().riskTolerance);
-  console.log('Moderate config:', moderateGuardian.getConfig().riskTolerance);
+  console.log('Strict config:', strictGuard.getConfig().riskTolerance);
+  console.log('Moderate config:', moderateGuard.getConfig().riskTolerance);
   console.log(
     'Permissive config:',
-    permissiveGuardian.getConfig().riskTolerance
+    permissiveGuard.getConfig().riskTolerance
   );
 }
 
@@ -95,24 +95,24 @@ function warnVsBlock() {
   console.log('\n=== Example 5: Warn vs Block Mode ===\n');
 
   // Block mode - prevents dangerous transactions
-  const blockGuardian = new Guardian({
+  const blockGuard = new Guard({
     mode: 'block',
   });
 
   // Warn mode - allows transactions but logs warnings
-  const warnGuardian = new Guardian({
+  const warnGuard = new Guard({
     mode: 'warn',
   });
 
-  console.log('Block mode config:', blockGuardian.getConfig().mode);
-  console.log('Warn mode config:', warnGuardian.getConfig().mode);
+  console.log('Block mode config:', blockGuard.getConfig().mode);
+  console.log('Warn mode config:', warnGuard.getConfig().mode);
 }
 
 // Example 6: Custom Validation Rules
 function customRules() {
   console.log('\n=== Example 6: Custom Validation Rules ===\n');
 
-  const guardian = new Guardian({
+  const guard = new Guard({
     customRules: [
       {
         id: 'max-instructions',
@@ -134,7 +134,7 @@ function customRules() {
     ],
   };
 
-  const result = guardian.validateTransaction(validTx);
+  const result = guard.validateTransaction(validTx);
   console.log('Custom rule validation:', result.isValid);
 }
 
@@ -142,45 +142,45 @@ function customRules() {
 function warningHistory() {
   console.log('\n=== Example 7: Warning History ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   // Validate some transactions
-  guardian.validateTransaction({ id: 'tx-003', status: 'pending' });
-  guardian.validateTransaction({ id: 'tx-004', status: 'pending' });
+  guard.validateTransaction({ id: 'tx-003', status: 'pending' });
+  guard.validateTransaction({ id: 'tx-004', status: 'pending' });
 
   // Get warning history
-  const warnings = guardian.getWarningHistory();
+  const warnings = guard.getWarningHistory();
   console.log('Total warnings:', warnings.length);
 
   // Clear history
-  guardian.clearWarningHistory();
-  console.log('After clear:', guardian.getWarningHistory().length);
+  guard.clearWarningHistory();
+  console.log('After clear:', guard.getWarningHistory().length);
 }
 
 // Example 8: Dynamic Configuration Updates
 function dynamicConfig() {
   console.log('\n=== Example 8: Dynamic Configuration ===\n');
 
-  const guardian = new Guardian({
+  const guard = new Guard({
     maxSlippage: 1.0,
     riskTolerance: 'moderate',
   });
 
-  console.log('Initial max slippage:', guardian.getConfig().maxSlippage);
+  console.log('Initial max slippage:', guard.getConfig().maxSlippage);
 
   // Update configuration at runtime
-  guardian.updateConfig({
+  guard.updateConfig({
     maxSlippage: 2.0,
     riskTolerance: 'strict',
   });
 
-  console.log('Updated max slippage:', guardian.getConfig().maxSlippage);
-  console.log('Updated risk tolerance:', guardian.getConfig().riskTolerance);
+  console.log('Updated max slippage:', guard.getConfig().maxSlippage);
+  console.log('Updated risk tolerance:', guard.getConfig().riskTolerance);
 }
 
 // Run all examples
 function runExamples() {
-  basicGuardian();
+  basicGuard();
   slippageProtection();
   emergencyStop();
   riskTolerance();

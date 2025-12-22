@@ -1,12 +1,12 @@
 /**
- * Guardian Security Pattern Detection Example
+ * Guard Security Pattern Detection Example
  *
- * This example demonstrates how Guardian detects dangerous
+ * This example demonstrates how Guard detects dangerous
  * transaction patterns (P-101 through P-104).
  */
 
 import {
-  Guardian,
+  Guard,
   PatternId,
   Severity,
   type Transaction,
@@ -19,7 +19,7 @@ const TOKEN_PROGRAM_ID = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
 function detectMintKill() {
   console.log('=== Example 1: Mint Kill Detection (P-101) ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   // SetAuthority instruction that removes mint authority
   const mintKillInstruction: TransactionInstruction = {
@@ -41,7 +41,7 @@ function detectMintKill() {
     instructions: [mintKillInstruction],
   };
 
-  const result = guardian.validateTransaction(tx);
+  const result = guard.validateTransaction(tx);
 
   console.log('Transaction Valid:', result.isValid);
   console.log('Warnings Found:', result.warnings.length);
@@ -65,7 +65,7 @@ function detectMintKill() {
 function detectFreezeKill() {
   console.log('\n=== Example 2: Freeze Kill Detection (P-102) ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   // SetAuthority instruction that removes freeze authority
   const freezeKillInstruction: TransactionInstruction = {
@@ -87,7 +87,7 @@ function detectFreezeKill() {
     instructions: [freezeKillInstruction],
   };
 
-  const result = guardian.validateTransaction(tx);
+  const result = guard.validateTransaction(tx);
 
   console.log('Transaction Valid:', result.isValid);
   console.log('Warnings:', result.warnings.map((w) => w.patternId));
@@ -97,7 +97,7 @@ function detectFreezeKill() {
 function detectSignerMismatch() {
   console.log('\n=== Example 3: Signer Mismatch Detection (P-103) ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   // Transferring authority to a wallet that's not signing
   const signerMismatchInstruction: TransactionInstruction = {
@@ -125,7 +125,7 @@ function detectSignerMismatch() {
     signers: ['CurrentAuthority'], // NewUntrustedAuthority is NOT a signer
   };
 
-  const result = guardian.validateTransaction(tx);
+  const result = guard.validateTransaction(tx);
 
   console.log('Transaction Valid:', result.isValid);
   if (result.warnings.length > 0) {
@@ -138,7 +138,7 @@ function detectSignerMismatch() {
 function detectDangerousClose() {
   console.log('\n=== Example 4: Dangerous Close Detection (P-104) ===\n');
 
-  const guardian = new Guardian();
+  const guard = new Guard();
 
   // CloseAccount instruction
   const closeAccountInstruction: TransactionInstruction = {
@@ -170,7 +170,7 @@ function detectDangerousClose() {
     instructions: [closeAccountInstruction],
   };
 
-  const result = guardian.validateTransaction(tx);
+  const result = guard.validateTransaction(tx);
 
   console.log('Transaction Valid:', result.isValid);
   console.log('Alert:', result.warnings[0]?.message);
@@ -180,7 +180,7 @@ function detectDangerousClose() {
 function detectMultiplePatterns() {
   console.log('\n=== Example 5: Multiple Pattern Detection ===\n');
 
-  const guardian = new Guardian({
+  const guard = new Guard({
     riskTolerance: 'strict',
   });
 
@@ -207,7 +207,7 @@ function detectMultiplePatterns() {
     ],
   };
 
-  const result = guardian.validateTransaction(tx);
+  const result = guard.validateTransaction(tx);
 
   console.log('Transaction Valid:', result.isValid);
   console.log('Total Warnings:', result.warnings.length);
@@ -235,14 +235,14 @@ function warnVsBlockMode() {
   };
 
   // Block mode - will prevent transaction
-  const blockGuardian = new Guardian({ mode: 'block' });
-  const blockResult = blockGuardian.validateTransaction(dangerousTx);
+  const blockGuard = new Guard({ mode: 'block' });
+  const blockResult = blockGuard.validateTransaction(dangerousTx);
   console.log('Block Mode - Valid:', blockResult.isValid);
   console.log('Block Mode - Blocked:', blockResult.blockedBy);
 
   // Warn mode - will allow but log warning
-  const warnGuardian = new Guardian({ mode: 'warn' });
-  const warnResult = warnGuardian.validateTransaction(dangerousTx);
+  const warnGuard = new Guard({ mode: 'warn' });
+  const warnResult = warnGuard.validateTransaction(dangerousTx);
   console.log('\nWarn Mode - Valid:', warnResult.isValid);
   console.log('Warn Mode - Warnings:', warnResult.warnings.length);
 }

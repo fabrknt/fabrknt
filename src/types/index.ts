@@ -8,9 +8,9 @@ export interface FabricantConfig {
 }
 
 /**
- * Guardian Configuration
+ * Guard Configuration (Fabric Guard)
  */
-export interface GuardianConfig {
+export interface GuardConfig {
   // Slippage protection
   maxSlippage?: number;
 
@@ -79,10 +79,15 @@ export interface ValidationResult {
   blockedBy?: PatternId[];
 }
 
-export interface FlowEngineConfig {
-  action: 'SWAP' | 'STAKE' | 'LEND' | 'YIELD';
-  pair?: [string, string];
-  priority?: 'Low' | 'Medium' | 'High' | 'Ultra';
+/**
+ * Loom Configuration (Flow Module)
+ */
+export interface LoomConfig {
+  type: string;
+  input?: string;
+  output?: string;
+  amount?: number;
+  parallelPriority?: boolean;
 }
 
 /**

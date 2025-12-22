@@ -7,16 +7,16 @@
 export { Fabricant } from './core/fabricant';
 
 // Components
-export { Guardian, PatternId, Severity } from './guardian';
-export { FlowEngine } from './flow-engine';
+export { Guard, PatternId, Severity } from './guardian';
+export { Loom } from './flow-engine';
 export { FabricCore } from './fabric';
-export { PulsarInsight } from './pulsar';
+export { PulsarIndex } from './pulsar';
 
 // Types
 export type {
   FabricantConfig,
-  GuardianConfig,
-  FlowEngineConfig,
+  GuardConfig,
+  LoomConfig,
   Transaction,
   SecurityWarning,
   ValidationResult,

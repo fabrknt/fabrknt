@@ -1,22 +1,22 @@
 /**
- * Guardian Validator - Transaction Validation Logic
+ * Guard Validator - Transaction Validation Logic (Fabric Guard)
  */
 
 import type {
   Transaction,
   ValidationResult,
-  GuardianConfig,
+  GuardConfig,
   SecurityWarning,
 } from '../types';
 import { Severity, PatternId } from '../types';
 import { analyzeTransaction } from './detector';
 
 /**
- * Validates a transaction against Guardian rules
+ * Validates a transaction against Guard rules
  */
 export function validateTransaction(
   transaction: Transaction,
-  config: GuardianConfig
+  config: GuardConfig
 ): ValidationResult {
   const warnings: SecurityWarning[] = [];
 
@@ -82,7 +82,7 @@ export function validateTransaction(
  */
 function determineBlocking(
   warnings: SecurityWarning[],
-  config: GuardianConfig
+  config: GuardConfig
 ): PatternId[] {
   const mode = config.mode || 'block';
   const riskTolerance = config.riskTolerance || 'moderate';

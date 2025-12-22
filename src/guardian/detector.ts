@@ -1,5 +1,5 @@
 /**
- * Guardian Detector - Security Pattern Detection
+ * Guard Detector - Security Pattern Detection (Fabric Guard)
  * Port of sol-ops-guard detector logic to TypeScript
  */
 

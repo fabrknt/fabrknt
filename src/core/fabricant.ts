@@ -1,9 +1,9 @@
 /**
- * Core Fabricant class for executing protected transactions
+ * Core Fabricant class for executing protected transactions with precision
  */
 
 import type { FabricantConfig, Transaction } from '../types';
-import type { Guardian } from '../guardian';
+import type { Guard } from '../guardian';
 
 export class Fabricant {
   private config: FabricantConfig;
@@ -18,11 +18,11 @@ export class Fabricant {
   // eslint-disable-next-line @typescript-eslint/require-await
   public static async execute(
     tx: Transaction,
-    options: { guardian?: Guardian } = {}
+    options: { with?: Guard } = {}
   ): Promise<Transaction> {
-    // Validate with guardian if provided
-    if (options.guardian) {
-      const isValid = options.guardian.validate();
+    // Validate with guard if provided
+    if (options.with) {
+      const isValid = options.with.validate();
       if (!isValid) {
         return { ...tx, status: 'failed' };
       }

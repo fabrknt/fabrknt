@@ -1,20 +1,20 @@
 /**
- * Flow Engine - The Yield & Liquidity Layer
- * Aggregates liquidity across the Solana ecosystem for optimal asset movement.
+ * Loom - The Flow Module (Silk Path)
+ * A high-velocity liquidity engine that finds the smoothest path for asset movement.
  */
 
-import type { FlowEngineConfig, Transaction } from '../types';
+import type { LoomConfig, Transaction } from '../types';
 
-export class FlowEngine {
+export class Loom {
   // eslint-disable-next-line @typescript-eslint/require-await
-  public static async build(config: FlowEngineConfig): Promise<Transaction> {
+  public static async weave(config: LoomConfig): Promise<Transaction> {
     // Placeholder implementation
-    // TODO: Use config for actual transaction building
+    // TODO: Use config for actual transaction weaving
     return {
-      id: `tx_${Date.now()}_${config.action}`,
+      id: `tx_${Date.now()}_${config.type}`,
       status: 'pending',
     };
   }
 }
 
-export type { FlowEngineConfig };
+export type { LoomConfig };
