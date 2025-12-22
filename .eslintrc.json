@@ -22,5 +22,5 @@
     "node": true,
     "es2022": true
   },
-  "ignorePatterns": ["dist", "node_modules", "*.config.ts"]
+  "ignorePatterns": ["dist", "node_modules", "*.config.ts", "examples", "tests", "docs"]
 }

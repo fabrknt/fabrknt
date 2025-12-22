@@ -7,7 +7,7 @@
 export { AegisFlow } from './core/aegis-flow';
 
 // Components
-export { Guardian } from './guardian';
+export { Guardian, PatternId, Severity } from './guardian';
 export { FlowEngine } from './flow-engine';
 export { FabricCore } from './fabric';
 export { PulsarInsight } from './pulsar';
@@ -18,4 +18,8 @@ export type {
   GuardianConfig,
   FlowEngineConfig,
   Transaction,
+  SecurityWarning,
+  ValidationResult,
+  ValidationRule,
+  TransactionInstruction,
 } from './types';
