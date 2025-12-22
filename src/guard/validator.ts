@@ -3,269 +3,286 @@
  */
 
 import type {
-  Transaction,
-  ValidationResult,
-  GuardConfig,
-  SecurityWarning,
-} from '../types';
-import { Severity, PatternId } from '../types';
-import { analyzeTransaction } from './detector';
-import { Pulsar } from '../pulsar';
+    Transaction,
+    ValidationResult,
+    GuardConfig,
+    SecurityWarning,
+} from "../types";
+import { Severity, PatternId } from "../types";
+import { analyzeTransaction } from "./detector";
+import { Pulsar } from "../pulsar";
 
 /**
  * Validates a transaction against Guard rules
  */
 export async function validateTransaction(
-  transaction: Transaction,
-  config: GuardConfig
+    transaction: Transaction,
+    config: GuardConfig
 ): Promise<ValidationResult> {
-  const warnings: SecurityWarning[] = [];
+    const warnings: SecurityWarning[] = [];
 
-  // Emergency stop check
-  if (config.emergencyStop) {
-    return {
-      isValid: false,
-      warnings: [
-        {
-          patternId: PatternId.MintKill, // Use generic pattern for emergency
-          severity: Severity.Critical,
-          message: '🛑 EMERGENCY STOP: All operations are halted',
-          timestamp: Date.now(),
-        },
-      ],
-      blockedBy: [PatternId.MintKill],
-    };
-  }
-
-  // Pattern detection
-  if (config.enablePatternDetection !== false) {
-    const detectedWarnings = analyzeTransaction(transaction);
-    warnings.push(...detectedWarnings);
-  }
-
-  // Fabric Pulse risk assessment (if enabled)
-  if (config.pulsar?.enabled && transaction.assetAddresses) {
-    const pulsarWarnings = await validatePulsarRisk(transaction, config.pulsar);
-    warnings.push(...pulsarWarnings);
-  }
-
-  // Privacy compliance validation (for Fabric Weave integration)
-  if (transaction.privacyMetadata?.requiresPrivacy) {
-    const privacyWarnings = validatePrivacyRequirements(transaction);
-    warnings.push(...privacyWarnings);
-  }
-
-  // Custom rules validation
-  if (config.customRules && config.customRules.length > 0) {
-    for (const rule of config.customRules) {
-      if (rule.enabled) {
-        try {
-          const ruleResult = rule.validate(transaction);
-          const isValid =
-            ruleResult instanceof Promise ? false : ruleResult; // For now, sync only
-
-          if (!isValid) {
-            warnings.push({
-              patternId: PatternId.SignerMismatch, // Generic pattern for custom rules
-              severity: Severity.Warning,
-              message: `Custom rule violation: ${rule.name}`,
-              timestamp: Date.now(),
-            });
-          }
-        } catch (error) {
-          // Skip invalid rules
-        }
-      }
+    // Emergency stop check
+    if (config.emergencyStop) {
+        return {
+            isValid: false,
+            warnings: [
+                {
+                    patternId: PatternId.MintKill, // Use generic pattern for emergency
+                    severity: Severity.Critical,
+                    message: "🛑 EMERGENCY STOP: All operations are halted",
+                    timestamp: Date.now(),
+                },
+            ],
+            blockedBy: [PatternId.MintKill],
+        };
     }
-  }
 
-  // Determine if transaction should be blocked
-  const blockedBy = determineBlocking(warnings, config);
-  const isValid = blockedBy.length === 0;
+    // Pattern detection
+    if (config.enablePatternDetection !== false) {
+        const detectedWarnings = analyzeTransaction(transaction);
+        warnings.push(...detectedWarnings);
+    }
 
-  return {
-    isValid,
-    warnings,
-    blockedBy: blockedBy.length > 0 ? blockedBy : undefined,
-  };
+    // Risk assessment (if enabled)
+    if (config.pulsar?.enabled && transaction.assetAddresses) {
+        const pulsarWarnings = await validatePulsarRisk(
+            transaction,
+            config.pulsar
+        );
+        warnings.push(...pulsarWarnings);
+    }
+
+    // Privacy compliance validation (for Privacy integration)
+    if (transaction.privacyMetadata?.requiresPrivacy) {
+        const privacyWarnings = validatePrivacyRequirements(transaction);
+        warnings.push(...privacyWarnings);
+    }
+
+    // Custom rules validation
+    if (config.customRules && config.customRules.length > 0) {
+        for (const rule of config.customRules) {
+            if (rule.enabled) {
+                try {
+                    const ruleResult = rule.validate(transaction);
+                    const isValid =
+                        ruleResult instanceof Promise ? false : ruleResult; // For now, sync only
+
+                    if (!isValid) {
+                        warnings.push({
+                            patternId: PatternId.SignerMismatch, // Generic pattern for custom rules
+                            severity: Severity.Warning,
+                            message: `Custom rule violation: ${rule.name}`,
+                            timestamp: Date.now(),
+                        });
+                    }
+                } catch (error) {
+                    // Skip invalid rules
+                }
+            }
+        }
+    }
+
+    // Determine if transaction should be blocked
+    const blockedBy = determineBlocking(warnings, config);
+    const isValid = blockedBy.length === 0;
+
+    return {
+        isValid,
+        warnings,
+        blockedBy: blockedBy.length > 0 ? blockedBy : undefined,
+    };
 }
 
 /**
- * Validates transaction against Fabric Pulse risk metrics
+ * Validates transaction against Risk metrics
  */
 async function validatePulsarRisk(
-  transaction: Transaction,
-  pulsarConfig: NonNullable<GuardConfig['pulsar']>
+    transaction: Transaction,
+    pulsarConfig: NonNullable<GuardConfig["pulsar"]>
 ): Promise<SecurityWarning[]> {
-  const warnings: SecurityWarning[] = [];
+    const warnings: SecurityWarning[] = [];
 
-  if (!transaction.assetAddresses || transaction.assetAddresses.length === 0) {
+    if (
+        !transaction.assetAddresses ||
+        transaction.assetAddresses.length === 0
+    ) {
+        return warnings;
+    }
+
+    try {
+        // Get risk metrics for all assets in the transaction
+        const riskMetricsMap = await Pulsar.getBatchRiskMetrics(
+            transaction.assetAddresses,
+            pulsarConfig
+        );
+
+        // Check each asset's risk score
+        for (const [assetAddress, metrics] of riskMetricsMap.entries()) {
+            // Risk score check
+            if (
+                metrics.riskScore !== null &&
+                pulsarConfig.riskThreshold !== undefined &&
+                metrics.riskScore > pulsarConfig.riskThreshold
+            ) {
+                warnings.push({
+                    patternId: PatternId.SignerMismatch, // Use generic pattern for risk warnings
+                    severity: Severity.Warning,
+                    message: `High risk asset detected: ${assetAddress} (risk score: ${metrics.riskScore.toFixed(
+                        2
+                    )})`,
+                    affectedAccount: assetAddress,
+                    timestamp: Date.now(),
+                });
+            }
+
+            // Compliance check
+            if (
+                pulsarConfig.enableComplianceCheck &&
+                metrics.complianceStatus === "non-compliant"
+            ) {
+                warnings.push({
+                    patternId: PatternId.SignerMismatch,
+                    severity: Severity.Critical,
+                    message: `Non-compliant asset detected: ${assetAddress}`,
+                    affectedAccount: assetAddress,
+                    timestamp: Date.now(),
+                });
+            }
+
+            // Counterparty risk check
+            if (
+                pulsarConfig.enableCounterpartyCheck &&
+                metrics.counterpartyRisk !== null &&
+                metrics.counterpartyRisk > 0.7
+            ) {
+                warnings.push({
+                    patternId: PatternId.SignerMismatch,
+                    severity: Severity.Warning,
+                    message: `High counterparty risk: ${assetAddress} (risk: ${metrics.counterpartyRisk.toFixed(
+                        2
+                    )})`,
+                    affectedAccount: assetAddress,
+                    timestamp: Date.now(),
+                });
+            }
+
+            // Oracle integrity check
+            if (
+                pulsarConfig.enableOracleCheck &&
+                metrics.oracleIntegrity !== null &&
+                metrics.oracleIntegrity < 0.8
+            ) {
+                warnings.push({
+                    patternId: PatternId.SignerMismatch,
+                    severity: Severity.Alert,
+                    message: `Low oracle integrity: ${assetAddress} (integrity: ${metrics.oracleIntegrity.toFixed(
+                        2
+                    )})`,
+                    affectedAccount: assetAddress,
+                    timestamp: Date.now(),
+                });
+            }
+        }
+    } catch (error) {
+        // If Risk fails and fallback is enabled, continue without warnings
+        // Otherwise, log the error (could add error warning if needed)
+        if (!pulsarConfig.fallbackOnError) {
+            warnings.push({
+                patternId: PatternId.SignerMismatch,
+                severity: Severity.Warning,
+                message: `Risk assessment failed: ${
+                    error instanceof Error ? error.message : "Unknown error"
+                }`,
+                timestamp: Date.now(),
+            });
+        }
+    }
+
     return warnings;
-  }
-
-  try {
-    // Get risk metrics for all assets in the transaction
-    const riskMetricsMap = await Pulsar.getBatchRiskMetrics(
-      transaction.assetAddresses,
-      pulsarConfig
-    );
-
-    // Check each asset's risk score
-    for (const [assetAddress, metrics] of riskMetricsMap.entries()) {
-      // Risk score check
-      if (
-        metrics.riskScore !== null &&
-        pulsarConfig.riskThreshold !== undefined &&
-        metrics.riskScore > pulsarConfig.riskThreshold
-      ) {
-        warnings.push({
-          patternId: PatternId.SignerMismatch, // Use generic pattern for risk warnings
-          severity: Severity.Warning,
-          message: `High risk asset detected: ${assetAddress} (risk score: ${metrics.riskScore.toFixed(2)})`,
-          affectedAccount: assetAddress,
-          timestamp: Date.now(),
-        });
-      }
-
-      // Compliance check
-      if (
-        pulsarConfig.enableComplianceCheck &&
-        metrics.complianceStatus === 'non-compliant'
-      ) {
-        warnings.push({
-          patternId: PatternId.SignerMismatch,
-          severity: Severity.Critical,
-          message: `Non-compliant asset detected: ${assetAddress}`,
-          affectedAccount: assetAddress,
-          timestamp: Date.now(),
-        });
-      }
-
-      // Counterparty risk check
-      if (
-        pulsarConfig.enableCounterpartyCheck &&
-        metrics.counterpartyRisk !== null &&
-        metrics.counterpartyRisk > 0.7
-      ) {
-        warnings.push({
-          patternId: PatternId.SignerMismatch,
-          severity: Severity.Warning,
-          message: `High counterparty risk: ${assetAddress} (risk: ${metrics.counterpartyRisk.toFixed(2)})`,
-          affectedAccount: assetAddress,
-          timestamp: Date.now(),
-        });
-      }
-
-      // Oracle integrity check
-      if (
-        pulsarConfig.enableOracleCheck &&
-        metrics.oracleIntegrity !== null &&
-        metrics.oracleIntegrity < 0.8
-      ) {
-        warnings.push({
-          patternId: PatternId.SignerMismatch,
-          severity: Severity.Alert,
-          message: `Low oracle integrity: ${assetAddress} (integrity: ${metrics.oracleIntegrity.toFixed(2)})`,
-          affectedAccount: assetAddress,
-          timestamp: Date.now(),
-        });
-      }
-    }
-  } catch (error) {
-    // If Fabric Pulse fails and fallback is enabled, continue without warnings
-    // Otherwise, log the error (could add error warning if needed)
-    if (!pulsarConfig.fallbackOnError) {
-      warnings.push({
-        patternId: PatternId.SignerMismatch,
-        severity: Severity.Warning,
-        message: `Fabric Pulse risk assessment failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        timestamp: Date.now(),
-      });
-    }
-  }
-
-  return warnings;
 }
 
 /**
  * Validates privacy requirements for transactions
  */
-function validatePrivacyRequirements(transaction: Transaction): SecurityWarning[] {
-  const warnings: SecurityWarning[] = [];
+function validatePrivacyRequirements(
+    transaction: Transaction
+): SecurityWarning[] {
+    const warnings: SecurityWarning[] = [];
 
-  // Check if transaction has privacy metadata but compression is not enabled
-  if (
-    transaction.privacyMetadata?.requiresPrivacy &&
-    !transaction.privacyMetadata.compressionEnabled
-  ) {
-    warnings.push({
-      patternId: PatternId.SignerMismatch, // Use generic pattern
-      severity: Severity.Warning,
-      message: 'Privacy requested but compression not enabled. Consider enabling ZK Compression for cost efficiency.',
-      timestamp: Date.now(),
-    });
-  }
+    // Check if transaction has privacy metadata but compression is not enabled
+    if (
+        transaction.privacyMetadata?.requiresPrivacy &&
+        !transaction.privacyMetadata.compressionEnabled
+    ) {
+        warnings.push({
+            patternId: PatternId.SignerMismatch, // Use generic pattern
+            severity: Severity.Warning,
+            message:
+                "Privacy requested but compression not enabled. Consider enabling ZK Compression for cost efficiency.",
+            timestamp: Date.now(),
+        });
+    }
 
-  return warnings;
+    return warnings;
 }
 
 /**
  * Determines which patterns should block the transaction
  */
 function determineBlocking(
-  warnings: SecurityWarning[],
-  config: GuardConfig
+    warnings: SecurityWarning[],
+    config: GuardConfig
 ): PatternId[] {
-  const mode = config.mode || 'block';
-  const riskTolerance = config.riskTolerance || 'moderate';
+    const mode = config.mode || "block";
+    const riskTolerance = config.riskTolerance || "moderate";
 
-  // In warn mode, never block
-  if (mode === 'warn') {
-    return [];
-  }
-
-  const blockedPatterns: PatternId[] = [];
-
-  for (const warning of warnings) {
-    const shouldBlock = shouldBlockPattern(
-      warning.patternId,
-      warning.severity,
-      riskTolerance
-    );
-
-    if (shouldBlock && !blockedPatterns.includes(warning.patternId)) {
-      blockedPatterns.push(warning.patternId);
+    // In warn mode, never block
+    if (mode === "warn") {
+        return [];
     }
-  }
 
-  return blockedPatterns;
+    const blockedPatterns: PatternId[] = [];
+
+    for (const warning of warnings) {
+        const shouldBlock = shouldBlockPattern(
+            warning.patternId,
+            warning.severity,
+            riskTolerance
+        );
+
+        if (shouldBlock && !blockedPatterns.includes(warning.patternId)) {
+            blockedPatterns.push(warning.patternId);
+        }
+    }
+
+    return blockedPatterns;
 }
 
 /**
  * Determines if a pattern should block based on severity and risk tolerance
  */
 function shouldBlockPattern(
-  pattern: PatternId,
-  severity: Severity,
-  riskTolerance: 'strict' | 'moderate' | 'permissive'
+    pattern: PatternId,
+    severity: Severity,
+    riskTolerance: "strict" | "moderate" | "permissive"
 ): boolean {
-  // Critical patterns always block in strict mode
-  if (severity === Severity.Critical && riskTolerance === 'strict') {
-    return true;
-  }
+    // Critical patterns always block in strict mode
+    if (severity === Severity.Critical && riskTolerance === "strict") {
+        return true;
+    }
 
-  // Moderate blocks critical patterns only
-  if (severity === Severity.Critical && riskTolerance === 'moderate') {
-    return true;
-  }
+    // Moderate blocks critical patterns only
+    if (severity === Severity.Critical && riskTolerance === "moderate") {
+        return true;
+    }
 
-  // Permissive only blocks mint/freeze kills
-  if (
-    riskTolerance === 'permissive' &&
-    (pattern === PatternId.MintKill || pattern === PatternId.FreezeKill)
-  ) {
-    return true;
-  }
+    // Permissive only blocks mint/freeze kills
+    if (
+        riskTolerance === "permissive" &&
+        (pattern === PatternId.MintKill || pattern === PatternId.FreezeKill)
+    ) {
+        return true;
+    }
 
-  return false;
+    return false;
 }

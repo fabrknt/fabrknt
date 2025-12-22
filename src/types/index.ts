@@ -3,159 +3,159 @@
  */
 
 export interface FabricantConfig {
-  network?: 'mainnet-beta' | 'devnet' | 'testnet';
-  rpcUrl?: string;
-  // Privacy configuration for Fabric Weave integration
-  privacy?: PrivacyConfig;
+    network?: "mainnet-beta" | "devnet" | "testnet";
+    rpcUrl?: string;
+    // Privacy configuration for Privacy integration
+    privacy?: PrivacyConfig;
 }
 
 /**
- * Privacy Configuration (Fabric Weave Integration)
+ * Privacy Configuration
  */
 export interface PrivacyConfig {
-  enabled?: boolean;
-  provider?: 'arbor' | 'light';
-  compressionLevel?: 'low' | 'medium' | 'high';
-  requirePrivacy?: boolean;
+    enabled?: boolean;
+    provider?: "arbor" | "light";
+    compressionLevel?: "low" | "medium" | "high";
+    requirePrivacy?: boolean;
 }
 
 /**
- * Fabric Pulse Risk Metrics
+ * Risk Metrics
  */
 export interface RiskMetrics {
-  asset?: string;
-  riskScore: number | null; // 0-1 scale, where 1 is highest risk
-  complianceStatus: 'compliant' | 'non-compliant' | 'unknown' | null;
-  counterpartyRisk: number | null; // 0-1 scale
-  oracleIntegrity: number | null; // 0-1 scale, where 1 is highest integrity
-  timestamp?: number;
+    asset?: string;
+    riskScore: number | null; // 0-1 scale, where 1 is highest risk
+    complianceStatus: "compliant" | "non-compliant" | "unknown" | null;
+    counterpartyRisk: number | null; // 0-1 scale
+    oracleIntegrity: number | null; // 0-1 scale, where 1 is highest integrity
+    timestamp?: number;
 }
 
 /**
- * Fabric Pulse Configuration
+ * Risk Configuration
  */
 export interface PulsarConfig {
-  enabled?: boolean;
-  riskThreshold?: number; // 0-1 scale, transactions above this will be blocked/warned
-  enableComplianceCheck?: boolean;
-  enableCounterpartyCheck?: boolean;
-  enableOracleCheck?: boolean;
-  cacheTTL?: number; // Cache time-to-live in milliseconds (default: 60000 = 1 minute)
-  fallbackOnError?: boolean; // Allow transactions if Fabric Pulse API fails
+    enabled?: boolean;
+    riskThreshold?: number; // 0-1 scale, transactions above this will be blocked/warned
+    enableComplianceCheck?: boolean;
+    enableCounterpartyCheck?: boolean;
+    enableOracleCheck?: boolean;
+    cacheTTL?: number; // Cache time-to-live in milliseconds (default: 60000 = 1 minute)
+    fallbackOnError?: boolean; // Allow transactions if Risk API fails
 }
 
 /**
  * Guard Configuration (Fabric Guard)
  */
 export interface GuardConfig {
-  // Slippage protection
-  maxSlippage?: number;
+    // Slippage protection
+    maxSlippage?: number;
 
-  // Emergency stop - halts all operations if anomalies detected
-  emergencyStop?: boolean;
+    // Emergency stop - halts all operations if anomalies detected
+    emergencyStop?: boolean;
 
-  // Security pattern detection
-  enablePatternDetection?: boolean;
+    // Security pattern detection
+    enablePatternDetection?: boolean;
 
-  // Risk tolerance level
-  riskTolerance?: 'strict' | 'moderate' | 'permissive';
+    // Risk tolerance level
+    riskTolerance?: "strict" | "moderate" | "permissive";
 
-  // Operation mode
-  mode?: 'block' | 'warn';
+    // Operation mode
+    mode?: "block" | "warn";
 
-  // Custom validation rules
-  customRules?: ValidationRule[];
+    // Custom validation rules
+    customRules?: ValidationRule[];
 
-  // Fabric Pulse integration for risk assessment
-  pulsar?: PulsarConfig;
+    // Risk integration for risk assessment
+    pulsar?: PulsarConfig;
 }
 
 /**
  * Security Pattern IDs
  */
 export enum PatternId {
-  MintKill = 'P-101',
-  FreezeKill = 'P-102',
-  SignerMismatch = 'P-103',
-  DangerousClose = 'P-104',
+    MintKill = "P-101",
+    FreezeKill = "P-102",
+    SignerMismatch = "P-103",
+    DangerousClose = "P-104",
 }
 
 /**
  * Warning Severity Levels
  */
 export enum Severity {
-  Critical = 'critical',
-  Warning = 'warning',
-  Alert = 'alert',
+    Critical = "critical",
+    Warning = "warning",
+    Alert = "alert",
 }
 
 /**
  * Security Warning
  */
 export interface SecurityWarning {
-  patternId: PatternId;
-  severity: Severity;
-  message: string;
-  affectedAccount?: string;
-  timestamp: number;
+    patternId: PatternId;
+    severity: Severity;
+    message: string;
+    affectedAccount?: string;
+    timestamp: number;
 }
 
 /**
  * Validation Rule
  */
 export interface ValidationRule {
-  id: string;
-  name: string;
-  enabled: boolean;
-  validate: (transaction: Transaction) => boolean | Promise<boolean>;
+    id: string;
+    name: string;
+    enabled: boolean;
+    validate: (transaction: Transaction) => boolean | Promise<boolean>;
 }
 
 /**
  * Validation Result
  */
 export interface ValidationResult {
-  isValid: boolean;
-  warnings: SecurityWarning[];
-  blockedBy?: PatternId[];
+    isValid: boolean;
+    warnings: SecurityWarning[];
+    blockedBy?: PatternId[];
 }
 
 /**
  * Loom Configuration (Flow Module)
  */
 export interface LoomConfig {
-  type: string;
-  input?: string;
-  output?: string;
-  amount?: number;
-  parallelPriority?: boolean;
+    type: string;
+    input?: string;
+    output?: string;
+    amount?: number;
+    parallelPriority?: boolean;
 }
 
 /**
  * Transaction Instruction
  */
 export interface TransactionInstruction {
-  programId: string;
-  keys: Array<{
-    pubkey: string;
-    isSigner: boolean;
-    isWritable: boolean;
-  }>;
-  data: string;
+    programId: string;
+    keys: Array<{
+        pubkey: string;
+        isSigner: boolean;
+        isWritable: boolean;
+    }>;
+    data: string;
 }
 
 /**
  * Transaction
  */
 export interface Transaction {
-  id: string;
-  status: 'pending' | 'executed' | 'failed';
-  instructions?: TransactionInstruction[];
-  signers?: string[];
-  // Asset addresses for risk assessment
-  assetAddresses?: string[];
-  // Privacy metadata
-  privacyMetadata?: {
-    requiresPrivacy?: boolean;
-    compressionEnabled?: boolean;
-  };
+    id: string;
+    status: "pending" | "executed" | "failed";
+    instructions?: TransactionInstruction[];
+    signers?: string[];
+    // Asset addresses for risk assessment
+    assetAddresses?: string[];
+    // Privacy metadata
+    privacyMetadata?: {
+        requiresPrivacy?: boolean;
+        compressionEnabled?: boolean;
+    };
 }

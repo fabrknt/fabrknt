@@ -4,7 +4,7 @@
 
 Fabricant is a unified development stack designed to master Solana's Sealevel runtime. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision.
 
-[Documentation](https://github.com/psyto/fabricant) | [Guard Docs](./docs/GUARD.md) | [Fabric Pulse Docs](./docs/PULSAR.md) | [Fabric Weave Docs](./docs/ARBOR.md) | [X (Twitter)](https://x.com/psyto)
+[Documentation](https://github.com/psyto/fabricant) | [Guard Docs](./docs/GUARD.md) | [Risk Docs](./docs/RISK.md) | [Privacy Docs](./docs/PRIVACY.md) | [X (Twitter)](https://x.com/psyto)
 
 ---
 
@@ -14,7 +14,7 @@ In a parallel world, transactions are no longer a linear chain—they are a comp
 
 ## 📦 The Fabricant Suite
 
-### 1. 🧵 Fabric Core (Core: `solfabric`)
+### 1. 🧵 Loom (Core: `solfabric`)
 
 **The Advanced Loom.**
 A framework that structures state management and transaction bundling to eliminate lock contention.
@@ -22,7 +22,7 @@ A framework that structures state management and transaction bundling to elimina
 -   **Parallel Optimization:** Maximizes throughput using custom data structures.
 -   **Compute Efficiency:** Minimizes CU usage through optimized instruction routing.
 
-### 2. 🛡️ Fabric Guard (Core: `sol-ops-guard`)
+### 2. 🛡️ Guard (Core: `sol-ops-guard`)
 
 **The Quality Control.**
 An on-chain safety layer that ensures the integrity of every woven transaction.
@@ -30,7 +30,7 @@ An on-chain safety layer that ensures the integrity of every woven transaction.
 -   **Execution Constraints:** Hardened boundaries for autonomous agent operations.
 -   **Anti-Drain Logic:** Real-time monitoring to prevent unauthorized capital flight.
 
-### 3. ⚡ Flow Module (Core: `x-liquidity-engine`)
+### 3. ⚡ Flow (Core: `x-liquidity-engine`)
 
 **The Silk Path.**
 A high-velocity liquidity engine that finds the smoothest path for asset movement across the ecosystem.
@@ -38,16 +38,16 @@ A high-velocity liquidity engine that finds the smoothest path for asset movemen
 -   Integrated multi-DEX routing for automated rebalancing.
 -   Low-latency execution for high-frequency strategies.
 
-### 4. 🧭 Fabric Pulse (Core: `pulsar`)
+### 4. 🧭 Risk (Core: `pulsar`)
 
 **The Quality Gauge.**
 An AI-driven risk assessment gateway providing institutional-grade metrics for asset integrity and RWA validation.
 
 -   **Real-time Risk Assessment:** Continuous monitoring of risk scores, compliance status, and oracle integrity.
 -   **Intelligent Caching:** Configurable TTL to maximize performance and minimize API overhead.
--   **Guard Integration:** Seamlessly feeds data into Fabric Guard for automated transaction blocking.
+-   **Guard Integration:** Seamlessly feeds data into Guard for automated transaction blocking.
 
-### 5. 🌿 Fabric Weave (Core: `arbor`)
+### 5. 🌿 Privacy (Core: `arbor`)
 
 **The Hidden Stitch.**
 A privacy and scaling layer utilizing ZK Compression for shielded, cost-efficient transaction execution.
@@ -78,22 +78,22 @@ const tx = await Loom.weave({
     input: "SOL",
     output: "USDC",
     amount: 50,
-    parallelPriority: true, // Enabled by Fabric Core
+    parallelPriority: true, // Enabled by Loom
 });
 
 // 3. Execute with Fabricant Precision
 await Fabricant.execute(tx, { with: guard });
 ```
 
-### Transaction with Fabric Pulse Risk Assessment
+### Transaction with Risk Assessment
 
 ```typescript
 import { Fabricant, Guard, Pulsar } from "@fabricant/sdk";
 
-// Guard with Fabric Pulse risk assessment enabled
+// Guard with Risk assessment enabled
 const guard = new Guard({
     pulsar: {
-        // Fabric Pulse configuration
+        // Risk configuration (class still named Pulsar for backward compatibility)
         enabled: true,
         riskThreshold: 0.7, // Block transactions with risk > 0.7
         enableComplianceCheck: true,
@@ -112,32 +112,32 @@ const tx = {
     instructions: [],
 };
 
-// Fabric Pulse automatically checks risk metrics during validation
+// Risk automatically checks risk metrics during validation
 const result = await guard.validateTransaction(tx);
 if (result.isValid) {
     await Fabricant.execute(tx, { with: guard });
 }
 ```
 
-### Private Transaction with Fabric Weave
+### Private Transaction with Privacy
 
 ```typescript
 import { Fabricant, Guard, FabricCore } from "@fabricant/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
-// Optimize transaction with privacy enabled via Fabric Weave
+// Optimize transaction with privacy enabled
 const tx = FabricCore.optimize(transaction, {
     enablePrivacy: true,
     compressionLevel: "high",
-    privacyProvider: "arbor", // Fabric Weave
+    privacyProvider: "arbor", // Privacy (provider identifier unchanged for backward compatibility)
 });
 
 // Execute as private transaction with ZK Compression
 const result = await Fabricant.executePrivate(tx, {
     with: guard,
     privacy: {
-        provider: "arbor", // Fabric Weave
+        provider: "arbor", // Privacy
         compression: true,
     },
 });
@@ -154,9 +154,9 @@ console.log(`Savings: ${savings.savingsPercent.toFixed(2)}%`);
 ## 🗺️ Roadmap: 2025-2026
 
 -   **Phase 1: The Loom (SDK Consolidation)** ✅ - Merging core modules into `@fabricant/sdk`.
--   **Phase 1.5: Risk & Privacy Integration** ✅ - Fabric Pulse risk oracle and Fabric Weave privacy layer integrated.
+-   **Phase 1.5: Risk & Privacy Integration** ✅ - Risk oracle and Privacy layer integrated.
 -   **Phase 2: Pattern Library** - Pre-built execution templates for AI Trading Agents and DAO Treasury Management.
--   **Phase 2.5: Full ZK Stack Integration** - Complete Fabric Weave/Light Protocol integration with proof generation.
+-   **Phase 2.5: Full ZK Stack Integration** - Complete Privacy/Light Protocol integration with proof generation.
 -   **Phase 3: The Fabricant Mainnet** - A decentralized autonomous vault infrastructure leveraging the full stack.
 
 ---
@@ -175,8 +175,8 @@ Fabricant is an open-source initiative for the Solana builder community.
 -   [x-liquidity-engine](https://github.com/psyto/x-liquidity-engine) - The Liquidity Backbone
 -   [sol-ops-guard](https://github.com/psyto/sol-ops-guard) - Security & Compliance
 -   [solfabric](https://github.com/psyto/solfabric) - Parallel Execution Logic
--   [pulsar](https://github.com/psyto/pulsar) - RWA Risk Oracle & Integrity Gateway
--   [arbor](https://github.com/psyto/arbor) - Shielded State Middleware & Privacy Layer
+-   [pulsar](https://github.com/psyto/pulsar) - Risk: RWA Risk Oracle & Integrity Gateway
+-   [arbor](https://github.com/psyto/arbor) - Privacy: Shielded State Middleware & Privacy Layer
 
 ---
 
