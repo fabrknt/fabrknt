@@ -1,21 +1,21 @@
 /**
  * Risk and Privacy Integration Examples
  *
- * This example demonstrates how to use Risk (The Quality Gauge) and 
- * Privacy (The Hidden Stitch) with Fabricant's Guard and execution system.
- * 
+ * This example demonstrates how to use Risk (The Quality Gauge) and
+ * Privacy (The Hidden Stitch) with Fabriquant's Guard and execution system.
+ *
  * Note: Classes are still exported as 'Pulsar' and provider identifiers use 'arbor'
  * for backward compatibility, but represent Risk and Privacy respectively.
  */
 
 import {
-    Fabricant,
+    Fabriquant,
     Guard,
     Pulsar,
     FabricCore,
     type Transaction,
     type GuardConfig,
-} from "@fabricant/sdk";
+} from "@fabriquant/sdk";
 
 // Example 1: Using Risk for Risk Assessment
 async function pulsarRiskAssessment() {
@@ -54,9 +54,9 @@ async function pulsarRiskAssessment() {
         console.log(`  - [${warning.severity}] ${warning.message}`);
     });
 
-    // Execute with Fabricant
+    // Execute with Fabriquant
     if (result.isValid) {
-        const executed = await Fabricant.execute(tx, { with: guard });
+        const executed = await Fabriquant.execute(tx, { with: guard });
         console.log("Execution Status:", executed.status);
     }
 }
@@ -131,7 +131,7 @@ async function privateTransactionExample() {
     };
 
     // Execute private transaction via Privacy
-    const result = await Fabricant.executePrivate(tx, {
+    const result = await Fabriquant.executePrivate(tx, {
         with: guard,
         privacy: {
             provider: "arbor", // Privacy (provider identifier unchanged for backward compatibility)
@@ -210,9 +210,7 @@ async function optimizedPrivateTransaction() {
 
 // Example 7: Combined Risk + Privacy Workflow
 async function combinedWorkflow() {
-    console.log(
-        "\n=== Example 7: Combined Risk + Privacy Workflow ===\n"
-    );
+    console.log("\n=== Example 7: Combined Risk + Privacy Workflow ===\n");
 
     // Step 1: Create Guard with Risk assessment
     const guard = new Guard({
@@ -246,7 +244,7 @@ async function combinedWorkflow() {
 
     if (validation.isValid) {
         // Step 5: Execute as private transaction via Privacy
-        const result = await Fabricant.executePrivate(optimized, {
+        const result = await Fabriquant.executePrivate(optimized, {
             with: guard,
             privacy: {
                 provider: "arbor", // Privacy

@@ -1,18 +1,18 @@
-# 🛠️ Fabricant: The Precision Execution Stack for Solana
+# 🛠️ Fabriquant: The Precision Execution Stack for Solana
 
 **Engineered for Parallelism. Built for Autonomy. Woven for Speed.**
 
-Fabricant is a unified development stack designed to master Solana's Sealevel runtime. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision.
+Fabriquant is a unified development stack designed to master Solana's Sealevel runtime. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision.
 
-[Documentation](https://github.com/psyto/fabricant) | [Guard Docs](./docs/GUARD.md) | [Risk Docs](./docs/RISK.md) | [Privacy Docs](./docs/PRIVACY.md) | [X (Twitter)](https://x.com/psyto)
+[Documentation](https://github.com/psyto/fabriquant) | [Guard Docs](./docs/GUARD.md) | [Risk Docs](./docs/RISK.md) | [Privacy Docs](./docs/PRIVACY.md) | [X (Twitter)](https://x.com/psyto)
 
 ---
 
 ## 🧵 The Philosophy: "Weaving the Transaction Layer"
 
-In a parallel world, transactions are no longer a linear chain—they are a complex fabric. **Fabricant** provides the tools to design, optimize, and secure this fabric, ensuring that every thread (transaction) is executed with maximum efficiency and zero conflict.
+In a parallel world, transactions are no longer a linear chain—they are a complex fabric. **Fabriquant** provides the tools to design, optimize, and secure this fabric, ensuring that every thread (transaction) is executed with maximum efficiency and zero conflict.
 
-## 📦 The Fabricant Suite
+## 📦 The Fabriquant Suite
 
 ### 1. 🧵 Loom (Core: `solfabric`)
 
@@ -63,7 +63,7 @@ A privacy and scaling layer utilizing ZK Compression for shielded, cost-efficien
 ### Basic Transaction with Guard
 
 ```typescript
-import { Fabricant, Guard, Loom } from "@fabricant/sdk";
+import { Fabriquant, Guard, Loom } from "@fabriquant/sdk";
 
 // 1. Initialize the Precision Guard
 const guard = new Guard({
@@ -81,14 +81,14 @@ const tx = await Loom.weave({
     parallelPriority: true, // Enabled by Loom
 });
 
-// 3. Execute with Fabricant Precision
-await Fabricant.execute(tx, { with: guard });
+// 3. Execute with Fabriquant Precision
+await Fabriquant.execute(tx, { with: guard });
 ```
 
 ### Transaction with Risk Assessment
 
 ```typescript
-import { Fabricant, Guard, Pulsar } from "@fabricant/sdk";
+import { Fabriquant, Guard, Pulsar } from "@fabriquant/sdk";
 
 // Guard with Risk assessment enabled
 const guard = new Guard({
@@ -115,14 +115,14 @@ const tx = {
 // Risk automatically checks risk metrics during validation
 const result = await guard.validateTransaction(tx);
 if (result.isValid) {
-    await Fabricant.execute(tx, { with: guard });
+    await Fabriquant.execute(tx, { with: guard });
 }
 ```
 
 ### Private Transaction with Privacy
 
 ```typescript
-import { Fabricant, Guard, FabricCore } from "@fabricant/sdk";
+import { Fabriquant, Guard, FabricCore } from "@fabriquant/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
@@ -134,7 +134,7 @@ const tx = FabricCore.optimize(transaction, {
 });
 
 // Execute as private transaction with ZK Compression
-const result = await Fabricant.executePrivate(tx, {
+const result = await Fabriquant.executePrivate(tx, {
     with: guard,
     privacy: {
         provider: "arbor", // Privacy
@@ -153,17 +153,17 @@ console.log(`Savings: ${savings.savingsPercent.toFixed(2)}%`);
 
 ## 🗺️ Roadmap: 2025-2026
 
--   **Phase 1: The Loom (SDK Consolidation)** ✅ - Merging core modules into `@fabricant/sdk`.
+-   **Phase 1: The Loom (SDK Consolidation)** ✅ - Merging core modules into `@fabriquant/sdk`.
 -   **Phase 1.5: Risk & Privacy Integration** ✅ - Risk oracle and Privacy layer integrated.
 -   **Phase 2: Pattern Library** - Pre-built execution templates for AI Trading Agents and DAO Treasury Management.
 -   **Phase 2.5: Full ZK Stack Integration** - Complete Privacy/Light Protocol integration with proof generation.
--   **Phase 3: The Fabricant Mainnet** - A decentralized autonomous vault infrastructure leveraging the full stack.
+-   **Phase 3: The Fabriquant Mainnet** - A decentralized autonomous vault infrastructure leveraging the full stack.
 
 ---
 
 ## 🤝 Join the Atelier
 
-Fabricant is an open-source initiative for the Solana builder community.
+Fabriquant is an open-source initiative for the Solana builder community.
 
 -   **Builders:** Star our repos and contribute to the parallel execution revolution.
 -   **Projects:** Contact us for integration support for AI Agents and DeFi infrastructure.
@@ -180,5 +180,5 @@ Fabricant is an open-source initiative for the Solana builder community.
 
 ---
 
-**Fabricant: Weaving the Future of Autonomous Finance.**
+**Fabriquant: Weaving the Future of Autonomous Finance.**
 Built with ❤️ by **psyto** | Powered by **Solana**

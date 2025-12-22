@@ -1,15 +1,15 @@
 /**
- * Core Fabricant class for executing protected transactions with precision
+ * Core Fabriquant class for executing protected transactions with precision
  */
 
-import type { FabricantConfig, Transaction } from "../types";
+import type { FabriquantConfig, Transaction } from "../types";
 import type { Guard } from "../guard";
 import { Pulsar } from "../pulsar";
 
-export class Fabricant {
-    private config: FabricantConfig;
+export class Fabriquant {
+    private config: FabriquantConfig;
 
-    constructor(config: FabricantConfig = {}) {
+    constructor(config: FabriquantConfig = {}) {
         this.config = {
             network: config.network || "mainnet-beta",
             rpcUrl: config.rpcUrl,
@@ -119,7 +119,7 @@ export class Fabricant {
         return { ...privateTx, status: "executed" };
     }
 
-    public getConfig(): FabricantConfig {
+    public getConfig(): FabriquantConfig {
         return this.config;
     }
 }

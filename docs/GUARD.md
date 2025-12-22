@@ -2,7 +2,7 @@
 
 ## Overview
 
-Guard is the quality control layer of the Fabricant SDK, designed to prevent unauthorized drain, excessive slippage, and malicious operations in Solana transactions. It provides real-time security pattern detection and configurable validation rules.
+Guard is the quality control layer of the Fabriquant SDK, designed to prevent unauthorized drain, excessive slippage, and malicious operations in Solana transactions. It provides real-time security pattern detection and configurable validation rules.
 
 ## Features
 
@@ -19,13 +19,13 @@ Guard is the quality control layer of the Fabricant SDK, designed to prevent una
 ## Installation
 
 ```bash
-npm install @fabricant/sdk
+npm install @fabriquant/sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { Guard } from "@fabricant/sdk";
+import { Guard } from "@fabriquant/sdk";
 
 // Create a Guard with default configuration
 const guard = new Guard();
@@ -293,7 +293,7 @@ Clears the warning history.
 ### Basic Validation
 
 ```typescript
-import { Guard } from "@fabricant/sdk";
+import { Guard } from "@fabriquant/sdk";
 
 const guard = new Guard({
     maxSlippage: 1.0,
@@ -316,7 +316,7 @@ if (result.isValid) {
 ### Risk Assessment
 
 ```typescript
-import { Guard } from "@fabricant/sdk";
+import { Guard } from "@fabriquant/sdk";
 
 const guard = new Guard({
     pulsar: {
@@ -437,26 +437,26 @@ const result = await guard.validateTransaction(privateTx);
 // Guard will warn if privacy is requested but compression is disabled
 ```
 
-## Integration with Fabricant
+## Integration with Fabriquant
 
 ### Standard Execution
 
 ```typescript
-import { Fabricant, Guard } from "@fabricant/sdk";
+import { Fabriquant, Guard } from "@fabriquant/sdk";
 
 const guard = new Guard({
     maxSlippage: 1.0,
     emergencyStop: false,
 });
 
-// Guard is automatically used by Fabricant.execute()
-await Fabricant.execute(tx, { with: guard });
+// Guard is automatically used by Fabriquant.execute()
+await Fabriquant.execute(tx, { with: guard });
 ```
 
 ### Execution with Risk Assessment
 
 ```typescript
-import { Fabricant, Guard } from "@fabricant/sdk";
+import { Fabriquant, Guard } from "@fabriquant/sdk";
 
 const guard = new Guard({
     pulsar: {
@@ -476,14 +476,14 @@ const tx = {
     instructions: [],
 };
 
-// Fabricant.execute() will check Risk before execution
-const result = await Fabricant.execute(tx, { with: guard });
+// Fabriquant.execute() will check Risk before execution
+const result = await Fabriquant.execute(tx, { with: guard });
 ```
 
 ### Private Transaction Execution
 
 ```typescript
-import { Fabricant, Guard } from "@fabricant/sdk";
+import { Fabriquant, Guard } from "@fabriquant/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
@@ -494,7 +494,7 @@ const tx = {
 };
 
 // Execute as private transaction with Privacy layer
-const result = await Fabricant.executePrivate(tx, {
+const result = await Fabriquant.executePrivate(tx, {
     with: guard,
     privacy: {
         provider: "arbor", // Privacy
@@ -527,14 +527,14 @@ import type {
     ValidationRule,
     PulsarConfig,
     RiskMetrics,
-} from "@fabricant/sdk";
+} from "@fabriquant/sdk";
 
 // Pattern IDs
-import { PatternId } from "@fabricant/sdk";
+import { PatternId } from "@fabriquant/sdk";
 // PatternId.MintKill, FreezeKill, SignerMismatch, DangerousClose
 
 // Severity Levels
-import { Severity } from "@fabricant/sdk";
+import { Severity } from "@fabriquant/sdk";
 // Severity.Critical, Warning, Alert
 ```
 
@@ -569,6 +569,6 @@ MIT License - see [LICENSE](../LICENSE) for details.
 
 ## Support
 
--   GitHub Issues: https://github.com/psyto/fabricant/issues
--   Documentation: https://github.com/psyto/fabricant
+-   GitHub Issues: https://github.com/psyto/fabriquant/issues
+-   Documentation: https://github.com/psyto/fabriquant
 -   Twitter: https://x.com/psyto

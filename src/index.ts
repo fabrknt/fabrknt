@@ -1,10 +1,10 @@
 /**
- * @fabricant/sdk
+ * @fabriquant/sdk
  * The Autonomous Execution Stack for Solana
  */
 
 // Core
-export { Fabricant } from "./core/fabricant";
+export { Fabriquant } from "./core/fabriquant";
 
 // Components
 export { Guard, PatternId, Severity } from "./guard";
@@ -14,7 +14,7 @@ export { Pulsar } from "./pulsar";
 
 // Types
 export type {
-    FabricantConfig,
+    FabriquantConfig,
     GuardConfig,
     LoomConfig,
     Transaction,

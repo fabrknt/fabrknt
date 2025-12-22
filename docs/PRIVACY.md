@@ -2,7 +2,7 @@
 
 ## Overview
 
-Privacy (formerly Fabric Weave/Arbor) is the Shielded State Middleware (SSM) integration for Fabricant, providing ZK Compression and privacy-enabled transaction execution. It acts as an abstraction layer between the Solana Virtual Machine (SVM) and the Light Protocol ZK Stack, enabling cost-efficient private transactions.
+Privacy (formerly Fabric Weave/Arbor) is the Shielded State Middleware (SSM) integration for Fabriquant, providing ZK Compression and privacy-enabled transaction execution. It acts as an abstraction layer between the Solana Virtual Machine (SVM) and the Light Protocol ZK Stack, enabling cost-efficient private transactions.
 
 **Note:** Provider identifiers still use `'arbor'` for backward compatibility, but represent the Privacy component.
 
@@ -27,7 +27,7 @@ ZK Compression provides dramatic cost reductions:
 ## Installation
 
 ```bash
-npm install @fabricant/sdk
+npm install @fabriquant/sdk
 ```
 
 ## Quick Start
@@ -35,7 +35,7 @@ npm install @fabricant/sdk
 ### Private Transaction Execution
 
 ```typescript
-import { Fabricant, Guard, FabricCore } from "@fabricant/sdk";
+import { Fabriquant, Guard, FabricCore } from "@fabriquant/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
@@ -46,7 +46,7 @@ const tx = {
 };
 
 // Execute as private transaction with ZK Compression via Privacy
-const result = await Fabricant.executePrivate(tx, {
+const result = await Fabriquant.executePrivate(tx, {
     with: guard,
     privacy: {
         provider: "arbor", // Note: 'arbor' is the provider identifier, represents Privacy
@@ -62,7 +62,7 @@ console.log("Compression Enabled:", result.privacyMetadata?.compressionEnabled);
 ### Cost Estimation
 
 ```typescript
-import { FabricCore } from "@fabricant/sdk";
+import { FabricCore } from "@fabriquant/sdk";
 
 // Estimate cost savings for 1000 transactions
 const savings = FabricCore.estimateCompressionSavings(1000);
@@ -76,7 +76,7 @@ console.log("Savings Percentage:", savings.savingsPercent.toFixed(2), "%");
 ### Optimized Private Transaction
 
 ```typescript
-import { FabricCore, Fabricant } from "@fabricant/sdk";
+import { FabricCore, Fabriquant } from "@fabriquant/sdk";
 
 const tx = {
     id: "tx-001",
@@ -92,7 +92,7 @@ const optimized = FabricCore.optimize(tx, {
 });
 
 // Execute as private transaction
-const result = await Fabricant.executePrivate(optimized, {
+const result = await Fabriquant.executePrivate(optimized, {
     privacy: {
         provider: "arbor",
         compression: true,
@@ -113,12 +113,12 @@ interface PrivacyConfig {
 }
 ```
 
-### FabricantConfig with Privacy
+### FabriquantConfig with Privacy
 
 ```typescript
-import { Fabricant } from "@fabricant/sdk";
+import { Fabriquant } from "@fabriquant/sdk";
 
-const fabricant = new Fabricant({
+const fabriquant = new Fabriquant({
     network: "mainnet-beta",
     privacy: {
         enabled: true,
@@ -130,7 +130,7 @@ const fabricant = new Fabricant({
 
 ## API Reference
 
-### Fabricant.executePrivate()
+### Fabriquant.executePrivate()
 
 ```typescript
 static async executePrivate(
@@ -221,7 +221,7 @@ Estimate cost savings from ZK Compression.
 Guard automatically validates privacy requirements:
 
 ```typescript
-import { Guard } from "@fabricant/sdk";
+import { Guard } from "@fabriquant/sdk";
 
 const guard = new Guard();
 
@@ -254,7 +254,7 @@ if (!result.isValid) {
 
 ```typescript
 // Hide transaction amounts while allowing disclosure to authorities via Privacy
-const payrollTx = await Fabricant.executePrivate(payrollTransaction, {
+const payrollTx = await Fabriquant.executePrivate(payrollTransaction, {
     privacy: {
         provider: "arbor", // Privacy
         compression: true,
@@ -266,7 +266,7 @@ const payrollTx = await Fabricant.executePrivate(payrollTransaction, {
 
 ```typescript
 // Mass airdrop to millions of users at minimal cost via Privacy
-const airdropTx = await Fabricant.executePrivate(airdropTransaction, {
+const airdropTx = await Fabriquant.executePrivate(airdropTransaction, {
     privacy: {
         provider: "arbor", // Privacy
         compression: true,
@@ -282,7 +282,7 @@ console.log(`Savings: ${savings.savingsPercent.toFixed(2)}%`);
 
 ```typescript
 // Hide order size and price until execution via Privacy
-const orderTx = await Fabricant.executePrivate(orderTransaction, {
+const orderTx = await Fabriquant.executePrivate(orderTransaction, {
     privacy: {
         provider: "arbor", // Privacy
         compression: true,
@@ -294,7 +294,7 @@ const orderTx = await Fabricant.executePrivate(orderTransaction, {
 
 ```typescript
 // Blind voting with results revealed after period ends via Privacy
-const voteTx = await Fabricant.executePrivate(voteTransaction, {
+const voteTx = await Fabriquant.executePrivate(voteTransaction, {
     privacy: {
         provider: "arbor", // Privacy
         compression: true,
@@ -364,7 +364,7 @@ See [`examples/pulsar-arbor-integration.ts`](../examples/pulsar-arbor-integratio
 
 ## Support
 
--   GitHub Issues: https://github.com/psyto/fabricant/issues
--   Documentation: https://github.com/psyto/fabricant
+-   GitHub Issues: https://github.com/psyto/fabriquant/issues
+-   Documentation: https://github.com/psyto/fabriquant
 -   Twitter: https://x.com/psyto
 -   Privacy Repository: https://github.com/psyto/arbor

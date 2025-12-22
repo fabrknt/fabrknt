@@ -1,61 +1,61 @@
 {
-  "name": "@fabricant/sdk",
-  "version": "0.1.0",
-  "description": "The Precision Execution Stack for Solana - Engineered for Parallelism, Built for Autonomy, Woven for Speed",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+    "name": "@fabriquant/sdk",
+    "version": "0.1.0",
+    "description": "The Precision Execution Stack for Solana - Engineered for Parallelism, Built for Autonomy, Woven for Speed",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "test": "vitest",
+        "test:coverage": "vitest --coverage",
+        "lint": "eslint . --ext .ts,.tsx",
+        "lint:fix": "eslint . --ext .ts,.tsx --fix",
+        "typecheck": "tsc --noEmit",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+        "solana",
+        "ai-agents",
+        "defi",
+        "blockchain",
+        "autonomous",
+        "security",
+        "liquidity",
+        "parallel-execution"
+    ],
+    "author": "Psyto",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/psyto/fabriquant"
+    },
+    "bugs": {
+        "url": "https://github.com/psyto/fabriquant/issues"
+    },
+    "homepage": "https://github.com/psyto/fabriquant",
+    "devDependencies": {
+        "@types/node": "^20.11.5",
+        "@typescript-eslint/eslint-plugin": "^6.19.0",
+        "@typescript-eslint/parser": "^6.19.0",
+        "@vitest/coverage-v8": "^1.2.0",
+        "eslint": "^8.56.0",
+        "tsup": "^8.0.1",
+        "typescript": "^5.3.3",
+        "vitest": "^1.2.0"
+    },
+    "dependencies": {
+        "@solana/web3.js": "^1.87.6"
+    },
+    "engines": {
+        "node": ">=18.0.0"
     }
-  },
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
-  },
-  "keywords": [
-    "solana",
-    "ai-agents",
-    "defi",
-    "blockchain",
-    "autonomous",
-    "security",
-    "liquidity",
-    "parallel-execution"
-  ],
-  "author": "Psyto",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/psyto/fabricant"
-  },
-  "bugs": {
-    "url": "https://github.com/psyto/fabricant/issues"
-  },
-  "homepage": "https://github.com/psyto/fabricant",
-  "devDependencies": {
-    "@types/node": "^20.11.5",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "@vitest/coverage-v8": "^1.2.0",
-    "eslint": "^8.56.0",
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.3",
-    "vitest": "^1.2.0"
-  },
-  "dependencies": {
-    "@solana/web3.js": "^1.87.6"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  }
 }

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Risk (formerly Fabric Pulse/Pulsar) is the Risk Oracle component of Fabricant, providing AI-driven risk assessment for Real World Assets (RWA) and asset integrity validation. It integrates seamlessly with Guard to provide institutional-grade risk metrics before transaction execution.
+Risk (formerly Fabric Pulse/Pulsar) is the Risk Oracle component of Fabriquant, providing AI-driven risk assessment for Real World Assets (RWA) and asset integrity validation. It integrates seamlessly with Guard to provide institutional-grade risk metrics before transaction execution.
 
 **Note:** The class is still exported as `Pulsar` for backward compatibility, but represents the Risk component.
 
@@ -17,7 +17,7 @@ Risk (formerly Fabric Pulse/Pulsar) is the Risk Oracle component of Fabricant, p
 ## Installation
 
 ```bash
-npm install @fabricant/sdk
+npm install @fabriquant/sdk
 ```
 
 ## Quick Start
@@ -25,7 +25,7 @@ npm install @fabricant/sdk
 ### Basic Risk Assessment
 
 ```typescript
-import { Pulsar } from "@fabricant/sdk";
+import { Pulsar } from "@fabriquant/sdk";
 
 // Note: The class is still named 'Pulsar' in code, but represents Risk
 // Get risk metrics for a single asset
@@ -42,7 +42,7 @@ console.log("Oracle Integrity:", metrics.oracleIntegrity);
 ### Batch Risk Assessment
 
 ```typescript
-import { Pulsar } from "@fabricant/sdk"; // Risk
+import { Pulsar } from "@fabriquant/sdk"; // Risk
 
 const assetAddresses = [
     "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
@@ -103,7 +103,7 @@ Risk uses an in-memory cache to reduce API calls and improve performance.
 ### Cache Management
 
 ```typescript
-import { Pulsar } from "@fabricant/sdk";
+import { Pulsar } from "@fabriquant/sdk";
 
 // Get cache statistics
 const stats = Pulsar.getCacheStats();
@@ -128,7 +128,7 @@ const metrics = await Pulsar.getRiskMetrics(assetAddress, {
 Risk integrates automatically with Guard when enabled in the configuration:
 
 ```typescript
-import { Guard } from "@fabricant/sdk";
+import { Guard } from "@fabriquant/sdk";
 
 const guard = new Guard({
     pulsar: {
@@ -307,6 +307,6 @@ Get cache statistics.
 
 ## Support
 
--   GitHub Issues: https://github.com/psyto/fabricant/issues
--   Documentation: https://github.com/psyto/fabricant
+-   GitHub Issues: https://github.com/psyto/fabriquant/issues
+-   Documentation: https://github.com/psyto/fabriquant
 -   Twitter: https://x.com/psyto
