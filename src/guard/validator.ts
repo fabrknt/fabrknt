@@ -10,14 +10,15 @@ import type {
 } from '../types';
 import { Severity, PatternId } from '../types';
 import { analyzeTransaction } from './detector';
+import { Pulsar } from '../pulsar';
 
 /**
  * Validates a transaction against Guard rules
  */
-export function validateTransaction(
+export async function validateTransaction(
   transaction: Transaction,
   config: GuardConfig
-): ValidationResult {
+): Promise<ValidationResult> {
   const warnings: SecurityWarning[] = [];
 
   // Emergency stop check
@@ -40,6 +41,18 @@ export function validateTransaction(
   if (config.enablePatternDetection !== false) {
     const detectedWarnings = analyzeTransaction(transaction);
     warnings.push(...detectedWarnings);
+  }
+
+  // Pulsar risk assessment (if enabled)
+  if (config.pulsar?.enabled && transaction.assetAddresses) {
+    const pulsarWarnings = await validatePulsarRisk(transaction, config.pulsar);
+    warnings.push(...pulsarWarnings);
+  }
+
+  // Privacy compliance validation (for Arbor integration)
+  if (transaction.privacyMetadata?.requiresPrivacy) {
+    const privacyWarnings = validatePrivacyRequirements(transaction);
+    warnings.push(...privacyWarnings);
   }
 
   // Custom rules validation
@@ -75,6 +88,125 @@ export function validateTransaction(
     warnings,
     blockedBy: blockedBy.length > 0 ? blockedBy : undefined,
   };
+}
+
+/**
+ * Validates transaction against Pulsar risk metrics
+ */
+async function validatePulsarRisk(
+  transaction: Transaction,
+  pulsarConfig: NonNullable<GuardConfig['pulsar']>
+): Promise<SecurityWarning[]> {
+  const warnings: SecurityWarning[] = [];
+
+  if (!transaction.assetAddresses || transaction.assetAddresses.length === 0) {
+    return warnings;
+  }
+
+  try {
+    // Get risk metrics for all assets in the transaction
+    const riskMetricsMap = await Pulsar.getBatchRiskMetrics(
+      transaction.assetAddresses,
+      pulsarConfig
+    );
+
+    // Check each asset's risk score
+    for (const [assetAddress, metrics] of riskMetricsMap.entries()) {
+      // Risk score check
+      if (
+        metrics.riskScore !== null &&
+        pulsarConfig.riskThreshold !== undefined &&
+        metrics.riskScore > pulsarConfig.riskThreshold
+      ) {
+        warnings.push({
+          patternId: PatternId.SignerMismatch, // Use generic pattern for risk warnings
+          severity: Severity.Warning,
+          message: `High risk asset detected: ${assetAddress} (risk score: ${metrics.riskScore.toFixed(2)})`,
+          affectedAccount: assetAddress,
+          timestamp: Date.now(),
+        });
+      }
+
+      // Compliance check
+      if (
+        pulsarConfig.enableComplianceCheck &&
+        metrics.complianceStatus === 'non-compliant'
+      ) {
+        warnings.push({
+          patternId: PatternId.SignerMismatch,
+          severity: Severity.Critical,
+          message: `Non-compliant asset detected: ${assetAddress}`,
+          affectedAccount: assetAddress,
+          timestamp: Date.now(),
+        });
+      }
+
+      // Counterparty risk check
+      if (
+        pulsarConfig.enableCounterpartyCheck &&
+        metrics.counterpartyRisk !== null &&
+        metrics.counterpartyRisk > 0.7
+      ) {
+        warnings.push({
+          patternId: PatternId.SignerMismatch,
+          severity: Severity.Warning,
+          message: `High counterparty risk: ${assetAddress} (risk: ${metrics.counterpartyRisk.toFixed(2)})`,
+          affectedAccount: assetAddress,
+          timestamp: Date.now(),
+        });
+      }
+
+      // Oracle integrity check
+      if (
+        pulsarConfig.enableOracleCheck &&
+        metrics.oracleIntegrity !== null &&
+        metrics.oracleIntegrity < 0.8
+      ) {
+        warnings.push({
+          patternId: PatternId.SignerMismatch,
+          severity: Severity.Alert,
+          message: `Low oracle integrity: ${assetAddress} (integrity: ${metrics.oracleIntegrity.toFixed(2)})`,
+          affectedAccount: assetAddress,
+          timestamp: Date.now(),
+        });
+      }
+    }
+  } catch (error) {
+    // If Pulsar fails and fallback is enabled, continue without warnings
+    // Otherwise, log the error (could add error warning if needed)
+    if (!pulsarConfig.fallbackOnError) {
+      warnings.push({
+        patternId: PatternId.SignerMismatch,
+        severity: Severity.Warning,
+        message: `Pulsar risk assessment failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        timestamp: Date.now(),
+      });
+    }
+  }
+
+  return warnings;
+}
+
+/**
+ * Validates privacy requirements for transactions
+ */
+function validatePrivacyRequirements(transaction: Transaction): SecurityWarning[] {
+  const warnings: SecurityWarning[] = [];
+
+  // Check if transaction has privacy metadata but compression is not enabled
+  if (
+    transaction.privacyMetadata?.requiresPrivacy &&
+    !transaction.privacyMetadata.compressionEnabled
+  ) {
+    warnings.push({
+      patternId: PatternId.SignerMismatch, // Use generic pattern
+      severity: Severity.Warning,
+      message: 'Privacy requested but compression not enabled. Consider enabling ZK Compression for cost efficiency.',
+      timestamp: Date.now(),
+    });
+  }
+
+  return warnings;
 }
 
 /**

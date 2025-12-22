@@ -29,8 +29,8 @@ export class Guard {
   /**
    * Validates a transaction against Guard security rules
    */
-  public validateTransaction(transaction: Transaction): ValidationResult {
-    const result = validateTransaction(transaction, this.config);
+  public async validateTransaction(transaction: Transaction): Promise<ValidationResult> {
+    const result = await validateTransaction(transaction, this.config);
 
     // Store warnings in history
     this.warningHistory.push(...result.warnings);
@@ -40,13 +40,14 @@ export class Guard {
 
   /**
    * Legacy validate method for backward compatibility
+   * Note: This is now async due to Pulsar integration
    */
-  public validate(transaction?: Transaction): boolean {
+  public async validate(transaction?: Transaction): Promise<boolean> {
     if (!transaction) {
       return !this.config.emergencyStop;
     }
 
-    const result = this.validateTransaction(transaction);
+    const result = await this.validateTransaction(transaction);
     return result.isValid;
   }
 

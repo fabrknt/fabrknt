@@ -5,6 +5,43 @@
 export interface FabricantConfig {
   network?: 'mainnet-beta' | 'devnet' | 'testnet';
   rpcUrl?: string;
+  // Privacy configuration for Arbor integration
+  privacy?: PrivacyConfig;
+}
+
+/**
+ * Privacy Configuration (Arbor Integration)
+ */
+export interface PrivacyConfig {
+  enabled?: boolean;
+  provider?: 'arbor' | 'light';
+  compressionLevel?: 'low' | 'medium' | 'high';
+  requirePrivacy?: boolean;
+}
+
+/**
+ * Pulsar Risk Metrics
+ */
+export interface RiskMetrics {
+  asset?: string;
+  riskScore: number | null; // 0-1 scale, where 1 is highest risk
+  complianceStatus: 'compliant' | 'non-compliant' | 'unknown' | null;
+  counterpartyRisk: number | null; // 0-1 scale
+  oracleIntegrity: number | null; // 0-1 scale, where 1 is highest integrity
+  timestamp?: number;
+}
+
+/**
+ * Pulsar Configuration
+ */
+export interface PulsarConfig {
+  enabled?: boolean;
+  riskThreshold?: number; // 0-1 scale, transactions above this will be blocked/warned
+  enableComplianceCheck?: boolean;
+  enableCounterpartyCheck?: boolean;
+  enableOracleCheck?: boolean;
+  cacheTTL?: number; // Cache time-to-live in milliseconds (default: 60000 = 1 minute)
+  fallbackOnError?: boolean; // Allow transactions if Pulsar API fails
 }
 
 /**
@@ -28,6 +65,9 @@ export interface GuardConfig {
 
   // Custom validation rules
   customRules?: ValidationRule[];
+
+  // Pulsar integration for risk assessment
+  pulsar?: PulsarConfig;
 }
 
 /**
@@ -111,4 +151,11 @@ export interface Transaction {
   status: 'pending' | 'executed' | 'failed';
   instructions?: TransactionInstruction[];
   signers?: string[];
+  // Asset addresses for risk assessment
+  assetAddresses?: string[];
+  // Privacy metadata
+  privacyMetadata?: {
+    requiresPrivacy?: boolean;
+    compressionEnabled?: boolean;
+  };
 }

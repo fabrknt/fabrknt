@@ -22,4 +22,7 @@ export type {
   ValidationResult,
   ValidationRule,
   TransactionInstruction,
+  RiskMetrics,
+  PulsarConfig,
+  PrivacyConfig,
 } from './types';
