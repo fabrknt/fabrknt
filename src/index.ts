@@ -221,3 +221,43 @@ export type {
     LiquidityPool,
     LiquidityPosition,
 } from "./patterns";
+
+/**
+ * Chain Abstraction Layer - Multi-chain support infrastructure.
+ *
+ * Provides unified interfaces for working across Solana and EVM chains.
+ * Portable components (Guard, Risk, Flow, Patterns) use chain adapters
+ * to work across different blockchains.
+ *
+ * @example
+ * ```typescript
+ * import { createChainAdapter, SolanaAdapter } from "@fabriquant/sdk";
+ *
+ * // Create Solana adapter
+ * const solanaAdapter = createChainAdapter({
+ *   chain: 'solana',
+ *   network: 'mainnet-beta',
+ *   rpcUrl: 'https://api.mainnet-beta.solana.com'
+ * });
+ *
+ * // Use adapter with Guard for cross-chain validation
+ * const guard = new Guard({
+ *   chainAdapter: solanaAdapter,
+ *   maxSlippage: 0.1
+ * });
+ * ```
+ */
+export {
+    createChainAdapter,
+    SolanaAdapter,
+    EVMAdapter,
+} from "./chain";
+
+export type {
+    ChainId,
+    UnifiedTransaction,
+    ChainAdapter,
+    ChainAdapterConfig,
+    TransactionResult,
+    CostEstimate,
+} from "./chain";

@@ -88,7 +88,7 @@ export interface YieldFarmingConfig extends PatternConfig {
  * ```
  */
 export class YieldFarmingPattern extends ExecutionPattern {
-  private config: YieldFarmingConfig;
+  protected config: YieldFarmingConfig;
   private allocations: Map<string, number> = new Map();
 
   constructor(config: YieldFarmingConfig) {
@@ -263,15 +263,8 @@ export class YieldFarmingPattern extends ExecutionPattern {
       parallelPriority: false,
     });
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'yield-farming',
-        protocol: protocol.name,
-        apy: protocol.apy,
-        amount,
-      },
-    };
+    // Return transaction (metadata stored in pattern result instead)
+    return tx;
   }
 
   /**

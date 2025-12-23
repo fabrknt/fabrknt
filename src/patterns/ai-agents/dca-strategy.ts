@@ -78,9 +78,8 @@ interface DCAExecution {
  * ```
  */
 export class DCAStrategy extends ExecutionPattern {
-  private config: DCAConfig;
+  protected config: DCAConfig;
   private executions: DCAExecution[] = [];
-  private currentInterval: number = 0;
   private intervalTimer?: NodeJS.Timeout;
 
   constructor(config: DCAConfig) {
@@ -193,14 +192,8 @@ export class DCAStrategy extends ExecutionPattern {
       executed: false,
     });
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'dca-strategy',
-        interval,
-        direction,
-      },
-    };
+    // Return transaction (metadata stored in DCAExecution record instead)
+    return tx;
   }
 
   /**

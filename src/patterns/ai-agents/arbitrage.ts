@@ -14,7 +14,6 @@ import {
   PatternConfig,
   PatternResult,
   TradingPair,
-  Price,
 } from '../types';
 
 /**
@@ -99,7 +98,7 @@ export interface ArbitrageConfig extends PatternConfig {
  * ```
  */
 export class ArbitragePattern extends ExecutionPattern {
-  private config: ArbitrageConfig;
+  protected config: ArbitrageConfig;
   private opportunities: ArbitrageOpportunity[] = [];
   private executedOpportunities: ArbitrageOpportunity[] = [];
   private scanTimer?: NodeJS.Timeout;
@@ -225,7 +224,7 @@ export class ArbitragePattern extends ExecutionPattern {
    * Get prices from all configured DEXs
    */
   private async getPricesFromDEXs(
-    pair: TradingPair
+    _pair: TradingPair
   ): Promise<Array<{ dex: DEX; price: number }>> {
     // Placeholder: In real implementation, this would query actual DEX prices
     // For now, return simulated prices
@@ -307,7 +306,7 @@ export class ArbitragePattern extends ExecutionPattern {
   private async executeArbitrage(
     opportunity: ArbitrageOpportunity
   ): Promise<Transaction[]> {
-    const { pair, buyDex, sellDex } = opportunity;
+    const { pair } = opportunity;
     const transactions: Transaction[] = [];
 
     // Create buy transaction
@@ -332,26 +331,8 @@ export class ArbitragePattern extends ExecutionPattern {
     const optimizedBuy = FabricCore.optimize(buyTx);
     const optimizedSell = FabricCore.optimize(sellTx);
 
-    transactions.push(
-      {
-        ...optimizedBuy,
-        metadata: {
-          pattern: 'arbitrage',
-          type: 'buy',
-          dex: buyDex.name,
-          profitPercent: opportunity.profitPercent,
-        },
-      },
-      {
-        ...optimizedSell,
-        metadata: {
-          pattern: 'arbitrage',
-          type: 'sell',
-          dex: sellDex.name,
-          profitPercent: opportunity.profitPercent,
-        },
-      }
-    );
+    // Add transactions (metadata stored in pattern result instead)
+    transactions.push(optimizedBuy, optimizedSell);
 
     // Execute transactions if not in dry-run mode
     if (!this.config.dryRun && this.config.guard) {

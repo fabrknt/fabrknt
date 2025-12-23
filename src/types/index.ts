@@ -68,6 +68,9 @@ export interface GuardConfig {
 
     // Risk integration for risk assessment
     pulsar?: PulsarConfig;
+
+    // Chain adapter for cross-chain support (optional, defaults to Solana)
+    chainAdapter?: import("../chain").ChainAdapter;
 }
 
 /**

@@ -26,6 +26,8 @@ import type {
     ValidationResult,
     SecurityWarning,
 } from "../types";
+import { PatternId, Severity } from "../types";
+import type { UnifiedTransaction } from "../chain";
 import { validateTransaction } from "./validator";
 
 /**
@@ -280,6 +282,88 @@ export class Guard {
             return true;
         }
         return actualSlippage <= this.config.maxSlippage;
+    }
+
+    /**
+     * Validates a unified transaction using chain adapter (cross-chain support).
+     *
+     * This method enables Guard to work across different blockchains through
+     * the chain abstraction layer. When a chain adapter is configured, Guard
+     * can validate transactions for Solana, EVM chains, and future chains.
+     *
+     * @param unifiedTx - Unified transaction to validate
+     * @returns Validation result with isValid flag, warnings, and optional reason
+     *
+     * @example
+     * ```typescript
+     * import { Guard, createChainAdapter } from '@fabriquant/sdk';
+     *
+     * // Create chain adapter
+     * const solanaAdapter = createChainAdapter({
+     *   chain: 'solana',
+     *   network: 'mainnet-beta'
+     * });
+     *
+     * // Create Guard with chain adapter
+     * const guard = new Guard({
+     *   chainAdapter: solanaAdapter,
+     *   maxSlippage: 0.1,
+     *   mode: 'block'
+     * });
+     *
+     * // Validate unified transaction
+     * const result = await guard.validateUnifiedTransaction(unifiedTx);
+     * if (!result.isValid) {
+     *   console.error('Validation failed:', result.reason);
+     * }
+     * ```
+     */
+    public async validateUnifiedTransaction(
+        unifiedTx: UnifiedTransaction
+    ): Promise<ValidationResult> {
+        // Use chain adapter to validate transaction structure
+        if (this.config.chainAdapter) {
+            const chainValidation = await this.config.chainAdapter.validateTransaction(unifiedTx);
+            if (!chainValidation.isValid) {
+                return {
+                    isValid: false,
+                    warnings: [
+                        {
+                            patternId: PatternId.SignerMismatch, // Generic pattern for chain validation
+                            severity: Severity.Critical,
+                            message: `Chain validation failed: ${chainValidation.errors?.join(", ")}`,
+                            timestamp: Date.now(),
+                        },
+                    ],
+                    blockedBy: [PatternId.SignerMismatch],
+                };
+            }
+
+            // Get chain-specific security patterns (for future use)
+            // const chainPatterns = this.config.chainAdapter.getSecurityPatterns();
+
+            // Convert unified transaction to legacy format for pattern detection
+            // This allows existing pattern detection to work
+            const legacyTx: Transaction = {
+                id: unifiedTx.id,
+                status: unifiedTx.status === "pending" ? "pending" : unifiedTx.status === "executed" ? "executed" : "failed",
+                assetAddresses: unifiedTx.assetAddresses,
+                privacyMetadata: unifiedTx.privacyMetadata,
+            };
+
+            // Use existing validation logic
+            return await this.validateTransaction(legacyTx);
+        }
+
+        // Fallback: convert unified transaction to legacy format
+        const legacyTx: Transaction = {
+            id: unifiedTx.id,
+            status: unifiedTx.status === "pending" ? "pending" : unifiedTx.status === "executed" ? "executed" : "failed",
+            assetAddresses: unifiedTx.assetAddresses,
+            privacyMetadata: unifiedTx.privacyMetadata,
+        };
+
+        return await this.validateTransaction(legacyTx);
     }
 }
 

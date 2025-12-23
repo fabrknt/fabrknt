@@ -74,7 +74,7 @@ interface GridLevel {
  * ```
  */
 export class GridTradingPattern extends ExecutionPattern {
-  private config: GridTradingConfig;
+  protected config: GridTradingConfig;
   private gridLevels: GridLevel[] = [];
 
   constructor(config: GridTradingConfig) {
@@ -203,14 +203,8 @@ export class GridTradingPattern extends ExecutionPattern {
       parallelPriority: true,
     });
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'grid-trading',
-        gridLevel: level.price,
-        orderType: level.type,
-      },
-    };
+    // Return transaction (metadata stored in GridLevel record instead)
+    return tx;
   }
 
   /**

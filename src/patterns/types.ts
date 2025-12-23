@@ -4,7 +4,8 @@
  * Common types and interfaces for pre-built execution patterns
  */
 
-import type { Transaction, Guard } from '../types';
+import type { Transaction } from '../types';
+import type { Guard } from '../guard';
 
 /**
  * Base configuration for all execution patterns

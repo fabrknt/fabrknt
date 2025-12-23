@@ -95,7 +95,7 @@ interface RebalanceAction {
  * ```
  */
 export class TreasuryRebalancing extends ExecutionPattern {
-  private config: RebalancingConfig;
+  protected config: RebalancingConfig;
   private actions: RebalanceAction[] = [];
 
   constructor(config: RebalancingConfig) {
@@ -286,18 +286,8 @@ export class TreasuryRebalancing extends ExecutionPattern {
       parallelPriority: true,
     });
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'treasury-rebalancing',
-        action: {
-          from: action.from.symbol,
-          to: action.to.symbol,
-          amount: action.amount,
-        },
-        reason: action.reason,
-      },
-    };
+    // Return transaction (metadata stored in pattern result instead)
+    return tx;
   }
 
   /**

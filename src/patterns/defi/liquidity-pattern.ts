@@ -117,7 +117,7 @@ export interface LiquidityConfig extends PatternConfig {
  * ```
  */
 export class LiquidityPattern extends ExecutionPattern {
-  private config: LiquidityConfig;
+  protected config: LiquidityConfig;
   private position?: LiquidityPosition;
 
   constructor(config: LiquidityConfig) {
@@ -258,17 +258,8 @@ export class LiquidityPattern extends ExecutionPattern {
       impermanentLoss: 0,
     };
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'liquidity',
-        action: 'add',
-        pool: pool.name,
-        amountA: amountA!,
-        amountB: amountB!,
-        initialValue,
-      },
-    };
+    // Return transaction (metadata stored in pattern result instead)
+    return tx;
   }
 
   /**
@@ -285,15 +276,8 @@ export class LiquidityPattern extends ExecutionPattern {
       parallelPriority: false,
     });
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'liquidity',
-        action: 'remove',
-        pool: pool.name,
-        percentage: removePercentage!,
-      },
-    };
+    // Return transaction (metadata stored in pattern result instead)
+    return tx;
   }
 
   /**

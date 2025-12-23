@@ -97,7 +97,7 @@ export interface SwapConfig extends PatternConfig {
  * ```
  */
 export class SwapPattern extends ExecutionPattern {
-  private config: SwapConfig;
+  protected config: SwapConfig;
   private allocations: Map<string, { route: SwapRoute; amount: number }> =
     new Map();
 
@@ -128,7 +128,7 @@ export class SwapPattern extends ExecutionPattern {
       const transactions: Transaction[] = [];
 
       // Execute swaps across selected routes
-      for (const [dex, allocation] of this.allocations) {
+      for (const [, allocation] of this.allocations) {
         const tx = await this.executeSwapOnRoute(
           allocation.route,
           allocation.amount
@@ -275,7 +275,7 @@ export class SwapPattern extends ExecutionPattern {
    * Execute swap on a specific route
    */
   private async executeSwapOnRoute(
-    route: SwapRoute,
+    _route: SwapRoute,
     amount: number
   ): Promise<Transaction> {
     const tx = await Loom.weave({
@@ -286,16 +286,8 @@ export class SwapPattern extends ExecutionPattern {
       parallelPriority: false,
     });
 
-    return {
-      ...tx,
-      metadata: {
-        pattern: 'swap',
-        route: route.dex,
-        priceImpact: route.priceImpact,
-        fee: route.fee,
-        expectedPrice: route.price,
-      },
-    };
+    // Return transaction (metadata stored in pattern result instead)
+    return tx;
   }
 
   /**
