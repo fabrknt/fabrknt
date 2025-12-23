@@ -1,0 +1,23 @@
+{
+  "name": "@fabriquant/marketing-automation",
+  "version": "1.0.0",
+  "description": "AI-powered marketing automation for Fabriquant",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:tweets": "node twitter-bot/generate-content.js",
+    "generate:batch": "node twitter-bot/generate-batch.js",
+    "review:content": "node twitter-bot/review-queue.js",
+    "post:approved": "node twitter-bot/post-content.js",
+    "dm:bot": "node dm-bot/responder.js",
+    "setup:kb": "node knowledge-base/build-kb.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "dotenv": "^16.4.5",
+    "twitter-api-v2": "^1.17.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5"
+  }
+}

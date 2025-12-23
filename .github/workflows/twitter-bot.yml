@@ -1,0 +1,58 @@
+name: Twitter Content Bot
+
+on:
+  schedule:
+    # Post every 3 hours from 8am-8pm UTC (customize for your timezone)
+    - cron: '0 8,11,14,17,20 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  post-content:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: marketing/package.json
+
+      - name: Install dependencies
+        run: |
+          cd marketing
+          npm ci
+
+      - name: Post approved content
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          POSTING_INTERVAL_HOURS: 3
+        run: |
+          cd marketing
+          npm run post:approved
+
+      - name: Commit updated queues
+        run: |
+          git config --global user.name 'Fabriquant Bot'
+          git config --global user.email 'bot@fabriquant.dev'
+          git add marketing/content-queue/
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update content queues [skip ci]"
+          git push
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: posting-logs
+          path: |
+            marketing/content-queue/
+            marketing/*.log
