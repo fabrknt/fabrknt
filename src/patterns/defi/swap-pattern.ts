@@ -15,6 +15,8 @@ import {
   Token,
   Price,
 } from '../types';
+import type { DEXAdapter } from '../../dex/types';
+import { JupiterAdapter } from '../../dex/jupiter';
 
 /**
  * Swap route option
@@ -46,14 +48,18 @@ export interface SwapConfig extends PatternConfig {
   amount: number;
   /** Current price */
   currentPrice: Price;
-  /** Available routes */
-  routes: SwapRoute[];
+  /** Available routes (optional if using real DEX) */
+  routes?: SwapRoute[];
   /** Maximum price impact allowed (%) */
   maxPriceImpact: number;
   /** Split orders across routes */
   enableSplitOrders?: boolean;
   /** Minimum route allocation (%) */
   minRouteAllocation?: number;
+  /** Enable real DEX integration via Jupiter (default: false for testing) */
+  enableRealDEX?: boolean;
+  /** Custom DEX adapter (overrides default Jupiter) */
+  dexAdapter?: DEXAdapter;
 }
 
 /**
@@ -100,14 +106,22 @@ export class SwapPattern extends ExecutionPattern {
   protected config: SwapConfig;
   private allocations: Map<string, { route: SwapRoute; amount: number }> =
     new Map();
+  private dexAdapter?: DEXAdapter;
 
   constructor(config: SwapConfig) {
     super(config);
     this.config = {
       enableSplitOrders: true,
       minRouteAllocation: 10, // 10% minimum
+      enableRealDEX: false,
+      routes: [],
       ...config,
     };
+
+    // Initialize DEX adapter if real DEX integration is enabled
+    if (this.config.enableRealDEX) {
+      this.dexAdapter = this.config.dexAdapter || new JupiterAdapter();
+    }
   }
 
   /**
@@ -117,6 +131,11 @@ export class SwapPattern extends ExecutionPattern {
     this.startTime = Date.now();
 
     try {
+      // Fetch real routes if enabled
+      if (this.config.enableRealDEX && this.dexAdapter) {
+        await this.fetchRealRoutes();
+      }
+
       // Validate configuration
       if (!this.validate()) {
         throw new Error('Invalid swap configuration');
@@ -172,6 +191,41 @@ export class SwapPattern extends ExecutionPattern {
   }
 
   /**
+   * Fetch real routes from DEX adapter
+   */
+  private async fetchRealRoutes(): Promise<void> {
+    if (!this.dexAdapter) return;
+
+    try {
+      // Get quote from Jupiter for the swap
+      const quote = await this.dexAdapter.getQuote(
+        this.config.fromToken.mint,
+        this.config.toToken.mint,
+        this.config.amount
+      );
+
+      // Convert Jupiter market infos to SwapRoute format
+      const routes: SwapRoute[] = quote.marketInfos.map((marketInfo) => ({
+        dex: marketInfo.label,
+        programId: marketInfo.id,
+        price: parseFloat(marketInfo.outAmount) / parseFloat(marketInfo.inAmount),
+        liquidity: 1000000, // Jupiter doesn't provide this, use default
+        priceImpact: marketInfo.priceImpactPct || 0,
+        fee: marketInfo.lpFee.pct / 100,
+      }));
+
+      // Update config with real routes
+      this.config.routes = routes;
+    } catch (error) {
+      console.warn('Failed to fetch real routes:', error);
+      // Fall back to configured routes if available
+      if (!this.config.routes || this.config.routes.length === 0) {
+        throw new Error('Failed to fetch routes and no fallback routes available');
+      }
+    }
+  }
+
+  /**
    * Validate swap configuration
    */
   protected validate(): boolean {
@@ -182,7 +236,7 @@ export class SwapPattern extends ExecutionPattern {
       return false;
     }
 
-    if (routes.length === 0) {
+    if (!routes || routes.length === 0) {
       console.error('At least one route is required');
       return false;
     }

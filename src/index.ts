@@ -261,3 +261,41 @@ export type {
     TransactionResult,
     CostEstimate,
 } from "./chain";
+
+/**
+ * DEX Integration - Real-time price feeds and swap routing.
+ *
+ * Provides integration with Solana DEX aggregators (Jupiter) for
+ * real-time price data, optimal swap routing, and multi-DEX arbitrage.
+ *
+ * @example
+ * ```typescript
+ * import { JupiterAdapter, PriceFeedService, COMMON_TOKENS } from "@fabriquant/sdk";
+ *
+ * // Create Jupiter adapter
+ * const jupiter = new JupiterAdapter();
+ *
+ * // Get quote for SOL->USDC swap
+ * const quote = await jupiter.getQuote(
+ *   COMMON_TOKENS.SOL,
+ *   COMMON_TOKENS.USDC,
+ *   100 // amount
+ * );
+ *
+ * // Create price feed service
+ * const priceFeed = new PriceFeedService();
+ * const solPrice = await priceFeed.getPrice(COMMON_TOKENS.SOL);
+ * ```
+ */
+export { JupiterAdapter, PriceFeedService, COMMON_TOKENS } from "./dex";
+
+export type {
+    TokenMint,
+    PriceQuote,
+    MarketInfo,
+    SwapRoute as DEXSwapRoute,
+    TokenPrice,
+    DEXAdapter,
+    PriceFeed,
+    DEXConfig,
+} from "./dex";

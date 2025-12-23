@@ -15,6 +15,8 @@ import {
   PatternResult,
   TradingPair,
 } from '../types';
+import type { DEXAdapter } from '../../dex/types';
+import { JupiterAdapter } from '../../dex/jupiter';
 
 /**
  * DEX information
@@ -68,6 +70,10 @@ export interface ArbitrageConfig extends PatternConfig {
   scanInterval?: number;
   /** Execute opportunities automatically */
   autoExecute?: boolean;
+  /** Enable real DEX integration via Jupiter (default: false for testing) */
+  enableRealDEX?: boolean;
+  /** Custom DEX adapter (overrides default Jupiter) */
+  dexAdapter?: DEXAdapter;
 }
 
 /**
@@ -102,14 +108,21 @@ export class ArbitragePattern extends ExecutionPattern {
   private opportunities: ArbitrageOpportunity[] = [];
   private executedOpportunities: ArbitrageOpportunity[] = [];
   private scanTimer?: NodeJS.Timeout;
+  private dexAdapter?: DEXAdapter;
 
   constructor(config: ArbitrageConfig) {
     super(config);
     this.config = {
       scanInterval: 5000, // 5 seconds default
       autoExecute: false,
+      enableRealDEX: false,
       ...config,
     };
+
+    // Initialize DEX adapter if real DEX integration is enabled
+    if (this.config.enableRealDEX) {
+      this.dexAdapter = this.config.dexAdapter || new JupiterAdapter();
+    }
   }
 
   /**
@@ -224,10 +237,34 @@ export class ArbitragePattern extends ExecutionPattern {
    * Get prices from all configured DEXs
    */
   private async getPricesFromDEXs(
-    _pair: TradingPair
+    pair: TradingPair
   ): Promise<Array<{ dex: DEX; price: number }>> {
-    // Placeholder: In real implementation, this would query actual DEX prices
-    // For now, return simulated prices
+    // If real DEX integration is enabled, fetch actual prices
+    if (this.config.enableRealDEX && this.dexAdapter) {
+      const prices: Array<{ dex: DEX; price: number }> = [];
+
+      for (const dex of this.config.dexs) {
+        try {
+          // Get price from DEX adapter
+          const priceData = await this.dexAdapter.getPrice(
+            pair.base.mint,
+            pair.quote.mint
+          );
+
+          prices.push({
+            dex,
+            price: priceData.price,
+          });
+        } catch (error) {
+          console.warn(`Failed to get price from ${dex.name}:`, error);
+          // Continue with other DEXs
+        }
+      }
+
+      return prices;
+    }
+
+    // Fallback: Return simulated prices for testing
     return this.config.dexs.map((dex) => ({
       dex,
       price: 100 + Math.random() * 5, // Simulated price variation
