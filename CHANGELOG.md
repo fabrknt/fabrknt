@@ -174,6 +174,15 @@ Future releases will be documented here.
 - Integration with actual x402 protocol for Risk
 - Full Privacy/Light Protocol ZK stack integration
 - TypeScript SDK examples for common use cases
+- Chain abstraction layer for cross-chain support
+- EVM support for Guard and Risk components
+
+### Business & Operations
+- **Business Plan v3.1** (January 2025): Added comprehensive AI tool leverage strategy
+  - Updated operating model to emphasize AI-assisted development, marketing, and operations
+  - Added AI tool stack recommendations and ROI analysis
+  - Updated financial projections to reflect AI tool cost savings
+  - Cross-chain strategy documented: "Solana-First, Cross-Chain Enabled"
 
 ---
 

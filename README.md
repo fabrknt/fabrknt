@@ -1,8 +1,8 @@
-# 🛠️ Fabriquant: The Precision Execution Stack for Solana
+# 🛠️ Fabriquant: The Precision Execution Stack — Solana-First, Cross-Chain Enabled
 
 **Engineered for Parallelism. Built for Autonomy. Woven for Speed.**
 
-Fabriquant is a unified development stack designed to master Solana's Sealevel runtime. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision.
+Fabriquant is a unified development stack designed to master Solana's Sealevel runtime while enabling cross-chain execution. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision across blockchains.
 
 [Documentation](https://github.com/fabriquant-labs/fabriquant) | [Guard Docs](./docs/GUARD.md) | [Risk Docs](./docs/RISK.md) | [Privacy Docs](./docs/PRIVACY.md) | [X (Twitter)](https://x.com/psyto)
 
@@ -153,20 +153,28 @@ console.log(`Savings: ${savings.savingsPercent.toFixed(2)}%`);
 
 ## 🗺️ Roadmap: 2025-2026
 
--   **Phase 1: The Loom (SDK Consolidation)** ✅ - Merging core modules into `@fabriquant/sdk`.
+-   **Phase 1: SDK Consolidation** ✅ - Merging core modules into `@fabriquant/sdk`.
 -   **Phase 1.5: Risk & Privacy Integration** ✅ - Risk oracle and Privacy layer integrated.
 -   **Phase 2: Pattern Library** - Pre-built execution templates for AI Trading Agents and DAO Treasury Management.
--   **Phase 2.5: Full ZK Stack Integration** - Complete Privacy/Light Protocol integration with proof generation.
--   **Phase 3: The Fabriquant Mainnet** - A decentralized autonomous vault infrastructure leveraging the full stack.
+-   **Phase 2.5: Chain Abstraction Layer** - Design chain abstraction architecture for cross-chain support.
+-   **Phase 3: EVM Support - Guard & Risk** - Launch Guard and Risk for EVM chains (Ethereum, Polygon, Arbitrum).
+-   **Phase 3.5: Full ZK Stack Integration** - Complete Privacy/Light Protocol integration with proof generation.
+-   **Phase 4: EVM Support - Flow & Patterns** - Launch Flow for EVM and cross-chain liquidity access.
+-   **Phase 5: Fabriquant Mainnet** - Decentralized autonomous vault infrastructure leveraging the full stack.
+
+**Strategy**: Solana-First, Cross-Chain Enabled — maintaining leadership in Solana's parallel execution while expanding portable components (Guard, Risk, Flow, Patterns) to EVM chains.
 
 ---
 
 ## 🤝 Join the Atelier
 
-Fabriquant is an open-source initiative for the Solana builder community.
+Fabriquant is an open-source initiative built by the community, for the community. We operate as a bootstrap-first, solopreneur-led project leveraging AI tools to maximize efficiency and impact.
 
 -   **Builders:** Star our repos and contribute to the parallel execution revolution.
 -   **Projects:** Contact us for integration support for AI Agents and DeFi infrastructure.
+-   **Community:** Join our Discord for support, discussions, and collaboration.
+
+**Operating Model**: Bootstrap-first, sustainable growth, strategic scaling. Built with extensive AI tool leverage for development, marketing, and operations.
 
 ---
 

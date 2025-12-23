@@ -52,6 +52,8 @@ Thank you for your interest in contributing to Fabriquant! This document provide
 
 ## Development Workflow
 
+**Note**: This project leverages AI-assisted development tools (GitHub Copilot, Cursor, ChatGPT) to maximize productivity. Contributors are encouraged to use AI tools for code generation, documentation, and testing while maintaining code quality and human review.
+
 1. **Create a branch** for your feature or fix:
    ```bash
    git checkout -b feature/your-feature-name
@@ -60,8 +62,13 @@ Thank you for your interest in contributing to Fabriquant! This document provide
    ```
 
 2. **Make your changes** following the code standards below
+   - Use AI tools for code generation, but always review and understand the generated code
+   - AI-generated code must pass all tests and linting
+   - Maintain code quality standards regardless of code source
 
 3. **Write or update tests** for your changes
+   - Use AI to generate test cases, but ensure comprehensive coverage
+   - Test both success and failure scenarios
 
 4. **Run the test suite** to ensure nothing breaks:
    ```bash
@@ -297,6 +304,7 @@ Closes #(issue number)
 - Add **JSDoc comments** for all public APIs
 - Include `@param` and `@returns` tags
 - Provide usage examples for complex functions
+- **AI-Assisted Documentation**: Use AI tools to generate initial documentation, but always review and refine for accuracy and clarity
 
 Example:
 
