@@ -10,9 +10,12 @@
 
 import {
     createPublicClient,
+    createWalletClient,
     http,
     type TransactionRequest,
     type Hash,
+    type WalletClient,
+    type Account,
     isAddress,
     isHex,
 } from "viem";
@@ -37,6 +40,8 @@ import {
     NetworkError,
     ValidationError,
     ConfigurationError,
+    GasEstimationError,
+    TransactionError,
 } from "./errors";
 
 /**
@@ -70,6 +75,7 @@ export class EVMAdapter implements ChainAdapter {
     readonly chain: ChainId;
     readonly network: string;
     private client: ReturnType<typeof createPublicClient>;
+    private walletClient?: WalletClient;
     private networkConfig: EVMNetworkConfig;
     private rpcUrl?: string;
 
@@ -199,19 +205,156 @@ export class EVMAdapter implements ChainAdapter {
     /**
      * Execute an EVM transaction
      *
-     * @todo Implement in Phase 3 - requires wallet client for signing
+     * Requires wallet client to be configured with an account for signing
      */
-    async executeTransaction(_tx: unknown): Promise<TransactionResult> {
-        throw new Error("EVMAdapter.executeTransaction not yet implemented - requires wallet integration (Phase 3)");
+    async executeTransaction(tx: unknown): Promise<TransactionResult> {
+        if (!this.walletClient) {
+            throw new ConfigurationError(
+                "Wallet client not configured - call setWalletClient() first",
+                "walletClient"
+            );
+        }
+
+        const txRequest = tx as TransactionRequest;
+
+        try {
+            // Send transaction
+            const hash = await this.walletClient.sendTransaction(txRequest as any);
+
+            // Wait for transaction receipt
+            const receipt = await this.client.waitForTransactionReceipt({
+                hash,
+                confirmations: this.getConfirmations(),
+                timeout: 120_000, // 2 minute timeout
+            });
+
+            // Map to TransactionResult
+            const result: TransactionResult = {
+                transactionId: hash,
+                hash,
+                status: receipt.status === "success" ? "success" : "reverted",
+                blockNumber: receipt.blockNumber ? Number(receipt.blockNumber) : undefined,
+                blockHash: receipt.blockHash,
+                gasUsed: receipt.gasUsed,
+                receipt,
+            };
+
+            // Extract revert reason if transaction reverted
+            if (receipt.status === "reverted") {
+                result.error = "Transaction reverted";
+                // TODO: Extract revert reason from receipt logs in future enhancement
+            }
+
+            return result;
+        } catch (error) {
+            throw new TransactionError(
+                `Failed to execute transaction: ${error instanceof Error ? error.message : String(error)}`,
+                undefined,
+                error instanceof Error ? error.message : undefined
+            );
+        }
     }
 
     /**
      * Estimate cost for EVM transaction
      *
-     * @todo Implement in Phase 3
+     * Estimates gas and calculates total cost with network-specific buffers
      */
-    async estimateCost(_tx: UnifiedTransaction): Promise<CostEstimate> {
-        throw new Error("EVMAdapter.estimateCost not yet implemented - coming in Phase 3");
+    async estimateCost(tx: UnifiedTransaction): Promise<CostEstimate> {
+        try {
+            // Build transaction for estimation
+            const txRequest = await this.buildTransaction(tx);
+
+            // Estimate gas limit
+            let gasLimit: bigint;
+            try {
+                const estimatedGas = await this.client.estimateGas(txRequest);
+                // Apply network-specific buffer
+                const buffer = BigInt(Math.floor(Number(estimatedGas) * this.networkConfig.gasMultiplier));
+                gasLimit = estimatedGas + buffer;
+            } catch (error) {
+                // Fallback to conservative default if estimation fails
+                console.warn("Gas estimation failed, using default:", error);
+                gasLimit = this.getDefaultGasLimit();
+            }
+
+            // Get current gas prices
+            let gasPrice: bigint;
+
+            try {
+                // Try to get EIP-1559 fees first
+                const feeData = await this.client.estimateFeesPerGas();
+
+                if (feeData.maxFeePerGas && feeData.maxPriorityFeePerGas) {
+                    gasPrice = feeData.maxFeePerGas; // Use maxFeePerGas for total cost calculation
+                } else {
+                    // Fallback to legacy gas price
+                    gasPrice = await this.client.getGasPrice();
+                }
+            } catch (error) {
+                // Fallback to network default
+                console.warn("Fee estimation failed, using default:", error);
+                gasPrice = this.networkConfig.defaultMaxPriorityFeePerGas || 1_000_000_000n; // 1 gwei default
+            }
+
+            // Calculate total cost
+            const estimatedCost = gasLimit * gasPrice;
+
+            return {
+                estimatedCost,
+                gasLimit,
+                gasPrice,
+            };
+        } catch (error) {
+            throw new GasEstimationError(
+                `Failed to estimate cost: ${error instanceof Error ? error.message : String(error)}`,
+                error
+            );
+        }
+    }
+
+    /**
+     * Set wallet client for transaction execution
+     *
+     * @param account - Account to use for signing (address or Account object)
+     */
+    setWalletClient(account: `0x${string}` | Account): void {
+        const viemChain = this.getViemChain();
+        const rpcUrl = this.rpcUrl || this.networkConfig.rpcUrls[0];
+
+        this.walletClient = createWalletClient({
+            account,
+            chain: viemChain,
+            transport: http(rpcUrl),
+        }) as any; // Type assertion to avoid viem version conflicts
+    }
+
+    /**
+     * Get number of confirmations to wait for based on network
+     */
+    private getConfirmations(): number {
+        // L2s are faster and more reliable, need fewer confirmations
+        if (this.chain === "base" || this.chain === "arbitrum") {
+            return 1;
+        }
+        // Ethereum and Polygon need more confirmations
+        return 2;
+    }
+
+    /**
+     * Get default gas limit for fallback scenarios
+     */
+    private getDefaultGasLimit(): bigint {
+        // Conservative defaults by network
+        const defaults: Record<ChainId, bigint> = {
+            ethereum: 300_000n,
+            base: 200_000n,
+            arbitrum: 1_000_000n, // Arbitrum has higher gas limits
+            polygon: 300_000n,
+            solana: 200_000n, // Not used for EVM
+            optimism: 200_000n,
+        };
+        return defaults[this.chain] || 300_000n;
     }
 
     /**
