@@ -4,8 +4,6 @@
  * Common types for DEX adapter implementations
  */
 
-import type { PublicKey } from '@solana/web3.js';
-
 /**
  * Token mint information
  */

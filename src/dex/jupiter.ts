@@ -124,7 +124,7 @@ export class JupiterAdapter implements DEXAdapter {
         throw new Error(`Jupiter API error: ${response.status} ${response.statusText}`);
       }
 
-      const data: JupiterQuoteResponse = await response.json();
+      const data = await response.json() as JupiterQuoteResponse;
 
       const quote: PriceQuote = {
         inputMint: data.inputMint,
@@ -197,7 +197,7 @@ export class JupiterAdapter implements DEXAdapter {
         throw new Error(`Jupiter Price API error: ${response.status}`);
       }
 
-      const data: JupiterPriceResponse = await response.json();
+      const data = await response.json() as JupiterPriceResponse;
       const priceData = data.data[inputMint];
 
       if (!priceData) {

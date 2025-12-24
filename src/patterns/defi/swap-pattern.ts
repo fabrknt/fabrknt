@@ -258,6 +258,10 @@ export class SwapPattern extends ExecutionPattern {
 
     const { routes, amount, enableSplitOrders, maxPriceImpact } = this.config;
 
+    if (!routes || routes.length === 0) {
+      throw new Error('No routes available for swap calculation');
+    }
+
     // Filter routes by max price impact
     const validRoutes = routes
       .filter(r => r.priceImpact <= maxPriceImpact)

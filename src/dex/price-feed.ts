@@ -4,7 +4,7 @@
  * Aggregates price data from multiple DEX adapters
  */
 
-import type { PriceFeed, TokenPrice, DEXAdapter } from './types';
+import type { PriceFeed, DEXAdapter } from './types';
 import { JupiterAdapter } from './jupiter';
 import { COMMON_TOKENS } from './types';
 
