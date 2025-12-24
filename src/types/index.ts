@@ -77,10 +77,17 @@ export interface GuardConfig {
  * Security Pattern IDs
  */
 export enum PatternId {
+    // Solana patterns
     MintKill = "P-101",
     FreezeKill = "P-102",
     SignerMismatch = "P-103",
     DangerousClose = "P-104",
+
+    // EVM patterns
+    ReentrancyAttack = "EVM-001",
+    FlashLoanAttack = "EVM-002",
+    FrontRunning = "EVM-003",
+    UnauthorizedAccess = "EVM-004",
 }
 
 /**

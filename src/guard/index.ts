@@ -28,7 +28,7 @@ import type {
 } from "../types";
 import { PatternId, Severity } from "../types";
 import type { UnifiedTransaction } from "../chain";
-import { validateTransaction } from "./validator";
+import { validateTransaction, validateUnifiedTransactionWithPatterns } from "./validator";
 
 /**
  * Guard class for transaction security validation and monitoring.
@@ -338,32 +338,15 @@ export class Guard {
                     blockedBy: [PatternId.SignerMismatch],
                 };
             }
-
-            // Get chain-specific security patterns (for future use)
-            // const chainPatterns = this.config.chainAdapter.getSecurityPatterns();
-
-            // Convert unified transaction to legacy format for pattern detection
-            // This allows existing pattern detection to work
-            const legacyTx: Transaction = {
-                id: unifiedTx.id,
-                status: unifiedTx.status === "pending" ? "pending" : unifiedTx.status === "executed" ? "executed" : "failed",
-                assetAddresses: unifiedTx.assetAddresses,
-                privacyMetadata: unifiedTx.privacyMetadata,
-            };
-
-            // Use existing validation logic
-            return await this.validateTransaction(legacyTx);
         }
 
-        // Fallback: convert unified transaction to legacy format
-        const legacyTx: Transaction = {
-            id: unifiedTx.id,
-            status: unifiedTx.status === "pending" ? "pending" : unifiedTx.status === "executed" ? "executed" : "failed",
-            assetAddresses: unifiedTx.assetAddresses,
-            privacyMetadata: unifiedTx.privacyMetadata,
-        };
+        // Use unified transaction validator with chain-specific pattern detection
+        const result = await validateUnifiedTransactionWithPatterns(unifiedTx, this.config);
 
-        return await this.validateTransaction(legacyTx);
+        // Store warnings in history
+        this.warningHistory.push(...result.warnings);
+
+        return result;
     }
 }
 

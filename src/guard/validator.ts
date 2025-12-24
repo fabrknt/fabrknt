@@ -10,10 +10,95 @@ import type {
 } from "../types";
 import { Severity, PatternId } from "../types";
 import { analyzeTransaction } from "./detector";
+import { detectAllEVMPatterns } from "./evm-detector";
 import { Pulsar } from "../pulsar";
+import type { UnifiedTransaction, EVMTransactionData } from "../chain/types";
+import { isEVMChain } from "../chain/evm-networks";
 
 /**
- * Validates a transaction against Guard rules
+ * Validates a unified transaction against Guard rules (multi-chain support)
+ */
+export async function validateUnifiedTransactionWithPatterns(
+    transaction: UnifiedTransaction,
+    config: GuardConfig
+): Promise<ValidationResult> {
+    const warnings: SecurityWarning[] = [];
+
+    // Emergency stop check
+    if (config.emergencyStop) {
+        return {
+            isValid: false,
+            warnings: [
+                {
+                    patternId: PatternId.MintKill, // Use generic pattern for emergency
+                    severity: Severity.Critical,
+                    message: "🛑 EMERGENCY STOP: All operations are halted",
+                    timestamp: Date.now(),
+                },
+            ],
+            blockedBy: [PatternId.MintKill],
+        };
+    }
+
+    // Pattern detection - route to correct detector based on chain
+    if (config.enablePatternDetection !== false) {
+        if (isEVMChain(transaction.chain)) {
+            // Use EVM detector
+            if (transaction.chainData.type === "evm") {
+                const evmData = transaction.chainData.data as EVMTransactionData;
+                const detectedWarnings = detectAllEVMPatterns(evmData);
+                warnings.push(...detectedWarnings);
+            }
+        } else {
+            // Use Solana detector (convert to legacy format)
+            const legacyTx: Transaction = {
+                id: transaction.id,
+                status: transaction.status === "pending" ? "pending" : transaction.status === "executed" ? "executed" : "failed",
+                instructions: transaction.chainData.type === "solana" ? transaction.chainData.data.instructions as any[] : undefined,
+                assetAddresses: transaction.assetAddresses,
+                privacyMetadata: transaction.privacyMetadata,
+            };
+            const detectedWarnings = analyzeTransaction(legacyTx);
+            warnings.push(...detectedWarnings);
+        }
+    }
+
+    // Risk assessment (if enabled)
+    if (config.pulsar?.enabled && transaction.assetAddresses) {
+        const legacyTx: Transaction = {
+            id: transaction.id,
+            status: transaction.status === "pending" ? "pending" : transaction.status === "executed" ? "executed" : "failed",
+            assetAddresses: transaction.assetAddresses,
+            privacyMetadata: transaction.privacyMetadata,
+        };
+        const pulsarWarnings = await validatePulsarRisk(legacyTx, config.pulsar);
+        warnings.push(...pulsarWarnings);
+    }
+
+    // Privacy compliance validation
+    if (transaction.privacyMetadata?.requiresPrivacy) {
+        const legacyTx: Transaction = {
+            id: transaction.id,
+            status: transaction.status === "pending" ? "pending" : transaction.status === "executed" ? "executed" : "failed",
+            privacyMetadata: transaction.privacyMetadata,
+        };
+        const privacyWarnings = validatePrivacyRequirements(legacyTx);
+        warnings.push(...privacyWarnings);
+    }
+
+    // Determine if transaction should be blocked
+    const blockedBy = determineBlocking(warnings, config);
+    const isValid = blockedBy.length === 0;
+
+    return {
+        isValid,
+        warnings,
+        blockedBy: blockedBy.length > 0 ? blockedBy : undefined,
+    };
+}
+
+/**
+ * Validates a transaction against Guard rules (legacy Solana format)
  */
 export async function validateTransaction(
     transaction: Transaction,
@@ -37,7 +122,7 @@ export async function validateTransaction(
         };
     }
 
-    // Pattern detection
+    // Pattern detection (Solana only for legacy transactions)
     if (config.enablePatternDetection !== false) {
         const detectedWarnings = analyzeTransaction(transaction);
         warnings.push(...detectedWarnings);
