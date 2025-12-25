@@ -7,7 +7,7 @@
  *
  * @example
  * ```typescript
- * import { Fabriquant, Guard } from "@fabriquant/sdk";
+ * import { Fabriquant, Guard } from "@fabrknt/sdk";
  *
  * const guard = new Guard({
  *   maxSlippage: 0.1,
@@ -72,7 +72,7 @@ export class Fabriquant {
      *
      * @example
      * ```typescript
-     * import { Fabriquant, Guard } from "@fabriquant/sdk";
+     * import { Fabriquant, Guard } from "@fabrknt/sdk";
      *
      * // Basic execution with Guard
      * const guard = new Guard({
@@ -197,7 +197,7 @@ export class Fabriquant {
      *
      * @example
      * ```typescript
-     * import { Fabriquant, Guard, FabricCore } from "@fabriquant/sdk";
+     * import { Fabriquant, Guard, FabricCore } from "@fabrknt/sdk";
      *
      * // Optimize transaction for privacy
      * const optimized = FabricCore.optimize(transaction, {

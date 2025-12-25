@@ -34,8 +34,8 @@ Thank you for your interest in contributing to Fabriquant! This document provide
 1. Fork the repository
 2. Clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/fabriquant.git
-   cd fabriquant
+   git clone https://github.com/YOUR_USERNAME/fabrknt.git
+   cd fabrknt
    ```
 3. Install dependencies:
    ```bash

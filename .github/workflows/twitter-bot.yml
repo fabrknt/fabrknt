@@ -43,7 +43,7 @@ jobs:
       - name: Commit updated queues
         run: |
           git config --global user.name 'Fabriquant Bot'
-          git config --global user.email 'bot@fabriquant.dev'
+          git config --global user.email 'bot@fabrknt.dev'
           git add marketing/content-queue/
           git diff --quiet && git diff --staged --quiet || git commit -m "chore: update content queues [skip ci]"
           git push

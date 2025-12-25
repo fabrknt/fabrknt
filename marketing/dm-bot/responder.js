@@ -137,7 +137,7 @@ async function generateResponse(anthropic, systemPrompt, conversationHistory, ne
   } catch (error) {
     console.error(`Error generating response: ${error.message}`);
     return {
-      reply: "I'm having trouble processing your message right now. Please check our documentation at https://github.com/fabriquant-labs/fabriquant or try again later.",
+      reply: "I'm having trouble processing your message right now. Please check our documentation at https://github.com/fabrknt/fabrknt or try again later.",
       conversationHistory
     };
   }

@@ -4,7 +4,7 @@
 
 Fabriquant is a unified development stack designed to master Solana's Sealevel runtime while enabling cross-chain execution. We provide the high-performance looms and safety frameworks necessary for AI Agents and DeFi protocols to weave complex transactions with absolute precision across blockchains.
 
-[Documentation](https://github.com/fabriquant-labs/fabriquant) | [Guard Docs](./docs/GUARD.md) | [Risk Docs](./docs/RISK.md) | [Privacy Docs](./docs/PRIVACY.md) | [X (Twitter)](https://x.com/psyto)
+[Documentation](https://github.com/fabrknt/fabrknt) | [Guard Docs](./docs/GUARD.md) | [Risk Docs](./docs/RISK.md) | [Privacy Docs](./docs/PRIVACY.md) | [X (Twitter)](https://x.com/psyto)
 
 ---
 
@@ -74,7 +74,7 @@ A unified interface for real-time price feeds, swap routing, and multi-DEX arbit
 ### Basic Transaction with Guard
 
 ```typescript
-import { Fabriquant, Guard, Loom } from "@fabriquant/sdk";
+import { Fabriquant, Guard, Loom } from "@fabrknt/sdk";
 
 // 1. Initialize the Precision Guard
 const guard = new Guard({
@@ -99,7 +99,7 @@ await Fabriquant.execute(tx, { with: guard });
 ### Transaction with Risk Assessment
 
 ```typescript
-import { Fabriquant, Guard, Pulsar } from "@fabriquant/sdk";
+import { Fabriquant, Guard, Pulsar } from "@fabrknt/sdk";
 
 // Guard with Risk assessment enabled
 const guard = new Guard({
@@ -133,7 +133,7 @@ if (result.isValid) {
 ### Private Transaction with Privacy
 
 ```typescript
-import { Fabriquant, Guard, FabricCore } from "@fabriquant/sdk";
+import { Fabriquant, Guard, FabricCore } from "@fabrknt/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
@@ -161,7 +161,7 @@ console.log(`Savings: ${savings.savingsPercent.toFixed(2)}%`);
 ### Real DEX Integration for Live Trading
 
 ```typescript
-import { JupiterAdapter, PriceFeedService, COMMON_TOKENS, ArbitragePattern, Guard } from "@fabriquant/sdk";
+import { JupiterAdapter, PriceFeedService, COMMON_TOKENS, ArbitragePattern, Guard } from "@fabrknt/sdk";
 
 // 1. Set up price feed service
 const priceFeed = new PriceFeedService({
@@ -213,7 +213,7 @@ unsubscribe();
 
 ## 🗺️ Roadmap: 2025-2026
 
--   **Phase 1: SDK Consolidation** ✅ - Merging core modules into `@fabriquant/sdk`.
+-   **Phase 1: SDK Consolidation** ✅ - Merging core modules into `@fabrknt/sdk`.
 -   **Phase 1.5: Risk & Privacy Integration** ✅ - Risk oracle and Privacy layer integrated.
 -   **Phase 2: Pattern Library** ✅ - Pre-built execution templates with real DEX integration (Jupiter V6).
 -   **Phase 2.5: Chain Abstraction Layer** 🏗️ - Design chain abstraction architecture for cross-chain support.

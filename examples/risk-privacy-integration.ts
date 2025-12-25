@@ -15,7 +15,7 @@ import {
     FabricCore,
     type Transaction,
     type GuardConfig,
-} from "@fabriquant/sdk";
+} from "@fabrknt/sdk";
 
 // Example 1: Using Risk for Risk Assessment
 async function pulsarRiskAssessment() {

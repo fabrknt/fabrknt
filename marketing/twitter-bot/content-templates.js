@@ -157,7 +157,7 @@ Fabriquant is a unified development stack for building on Solana with these core
 
 ## Community:
 - Twitter/X: @psyto
-- GitHub: fabriquant-labs/fabriquant
+- GitHub: fabrknt/fabrknt
 - Open to contributions and integrations
 `;
 

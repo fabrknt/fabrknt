@@ -296,7 +296,7 @@ export class Guard {
      *
      * @example
      * ```typescript
-     * import { Guard, createChainAdapter } from '@fabriquant/sdk';
+     * import { Guard, createChainAdapter } from '@fabrknt/sdk';
      *
      * // Create chain adapter
      * const solanaAdapter = createChainAdapter({

@@ -1,5 +1,5 @@
 {
-    "name": "@fabriquant/sdk",
+    "name": "@fabrknt/sdk",
     "version": "0.2.0",
     "description": "The Precision Execution Stack — Solana-First, Cross-Chain Enabled - Engineered for Parallelism, Built for Autonomy, Woven for Speed. Now with real DEX integration via Jupiter V6.",
     "main": "./dist/index.js",
@@ -41,12 +41,12 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/fabriquant-labs/fabriquant"
+        "url": "https://github.com/fabrknt/fabrknt"
     },
     "bugs": {
-        "url": "https://github.com/fabriquant-labs/fabriquant/issues"
+        "url": "https://github.com/fabrknt/fabrknt/issues"
     },
-    "homepage": "https://github.com/fabriquant-labs/fabriquant",
+    "homepage": "https://github.com/fabrknt/fabrknt",
     "devDependencies": {
         "@types/node": "^20.11.5",
         "@typescript-eslint/eslint-plugin": "^6.19.0",

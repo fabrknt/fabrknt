@@ -44,7 +44,7 @@ import {
   PriceFeedService,
   COMMON_TOKENS,
   Guard
-} from '@fabriquant/sdk';
+} from '@fabrknt/sdk';
 
 // 1. Get real-time prices
 const priceFeed = new PriceFeedService();
@@ -75,7 +75,7 @@ const result = await arbitrage.execute();
 ### Available Tokens
 
 ```typescript
-import { COMMON_TOKENS } from '@fabriquant/sdk';
+import { COMMON_TOKENS } from '@fabrknt/sdk';
 
 // Common Solana tokens with mint addresses
 COMMON_TOKENS.SOL    // Wrapped SOL
@@ -107,7 +107,7 @@ import {
   JupiterAdapter,        // ✨ For DEX integration
   PriceFeedService,      // ✨ For price feeds
   COMMON_TOKENS,         // ✨ For token mints
-} from '@fabriquant/sdk';
+} from '@fabrknt/sdk';
 ```
 
 ### Basic Usage
@@ -153,7 +153,7 @@ Profit from market volatility by placing buy and sell orders at predefined price
 **Example:**
 
 ```typescript
-import { GridTradingPattern, Guard } from '@fabriquant/sdk';
+import { GridTradingPattern, Guard } from '@fabrknt/sdk';
 
 const pattern = new GridTradingPattern({
   name: 'SOL-USDC Grid',
@@ -205,7 +205,7 @@ Reduce volatility impact by purchasing fixed amounts at regular intervals.
 **Example:**
 
 ```typescript
-import { DCAStrategy, Guard } from '@fabriquant/sdk';
+import { DCAStrategy, Guard } from '@fabrknt/sdk';
 
 const pattern = new DCAStrategy({
   name: 'Weekly SOL Purchase',
@@ -262,7 +262,7 @@ Capture price differences across multiple DEXs with parallel execution. Supports
 **Example (with Real DEX Integration):**
 
 ```typescript
-import { ArbitragePattern, Guard, COMMON_TOKENS } from '@fabriquant/sdk';
+import { ArbitragePattern, Guard, COMMON_TOKENS } from '@fabrknt/sdk';
 
 const pattern = new ArbitragePattern({
   name: 'Multi-DEX Arbitrage',
@@ -292,7 +292,7 @@ console.log(`Total profit: $${result.metadata.totalProfit}`);
 **Example (with Custom DEX Adapter):**
 
 ```typescript
-import { ArbitragePattern, JupiterAdapter } from '@fabriquant/sdk';
+import { ArbitragePattern, JupiterAdapter } from '@fabrknt/sdk';
 
 // Use custom adapter configuration
 const customAdapter = new JupiterAdapter({
@@ -343,7 +343,7 @@ Maintain target asset allocations automatically by rebalancing when deviations e
 **Example:**
 
 ```typescript
-import { TreasuryRebalancing, Guard } from '@fabriquant/sdk';
+import { TreasuryRebalancing, Guard } from '@fabrknt/sdk';
 
 const pattern = new TreasuryRebalancing({
   name: 'DAO Treasury Rebalance',
@@ -412,7 +412,7 @@ Optimize yields across multiple protocols with automated allocation strategies.
 **Example:**
 
 ```typescript
-import { YieldFarmingPattern, Guard } from '@fabriquant/sdk';
+import { YieldFarmingPattern, Guard } from '@fabrknt/sdk';
 
 const pattern = new YieldFarmingPattern({
   name: 'Treasury Yield Optimization',
@@ -497,7 +497,7 @@ Multi-route swap optimization with price impact minimization and intelligent ord
 **Example (with Real DEX Integration):**
 
 ```typescript
-import { SwapPattern, Guard, COMMON_TOKENS } from '@fabriquant/sdk';
+import { SwapPattern, Guard, COMMON_TOKENS } from '@fabrknt/sdk';
 
 const pattern = new SwapPattern({
   name: 'Optimized SOL Swap',
@@ -602,7 +602,7 @@ Automated liquidity provision with position management and impermanent loss moni
 **Example:**
 
 ```typescript
-import { LiquidityPattern, Guard } from '@fabriquant/sdk';
+import { LiquidityPattern, Guard } from '@fabrknt/sdk';
 
 // Add liquidity
 const addPattern = new LiquidityPattern({
@@ -724,7 +724,7 @@ interface PatternMetrics {
 Register and retrieve custom patterns:
 
 ```typescript
-import { PatternRegistry, ExecutionPattern } from '@fabriquant/sdk';
+import { PatternRegistry, ExecutionPattern } from '@fabrknt/sdk';
 
 // Register custom pattern
 class MyCustomPattern extends ExecutionPattern {
@@ -843,7 +843,7 @@ const newPattern = new SwapPattern({
 ### 7. Combine with Privacy
 
 ```typescript
-import { FabricCore } from '@fabriquant/sdk';
+import { FabricCore } from '@fabrknt/sdk';
 
 const pattern = new GridTradingPattern(config);
 const result = await pattern.execute();

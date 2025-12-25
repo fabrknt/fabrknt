@@ -13,7 +13,7 @@ This release represents a complete rebranding of the project from "Fabricant" to
 
 #### Project Naming
 - **BREAKING**: Renamed project from `fabricant` to `fabriquant`
-- **BREAKING**: Package name changed from `@fabricant/sdk` to `@fabriquant/sdk`
+- **BREAKING**: Package name changed from `@fabricant/sdk` to `@fabrknt/sdk`
 - Updated all documentation and examples to reflect new branding
 
 #### Component Naming Changes
@@ -71,7 +71,7 @@ The component naming has been simplified and clarified:
 
 #### Breaking Changes
 - Project name: `fabricant` → `fabriquant`
-- Package name: `@fabricant/sdk` → `@fabriquant/sdk`
+- Package name: `@fabricant/sdk` → `@fabrknt/sdk`
 - Import paths updated to reflect new package name
 
 #### Backward Compatible Changes
@@ -124,7 +124,7 @@ fabriquant/
 ### Roadmap
 
 #### Phase 1: SDK Consolidation ✅
-- Merged core modules into unified `@fabriquant/sdk`
+- Merged core modules into unified `@fabrknt/sdk`
 - Established consistent naming and branding
 
 #### Phase 1.5: Risk & Privacy Integration ✅
@@ -152,8 +152,8 @@ For users upgrading from pre-0.1.0 versions, see [MIGRATION.md](./MIGRATION.md) 
 
 ### Links
 
-- [Repository](https://github.com/fabriquant-labs/fabriquant)
-- [Issues](https://github.com/fabriquant-labs/fabriquant/issues)
+- [Repository](https://github.com/fabrknt/fabrknt)
+- [Issues](https://github.com/fabrknt/fabrknt/issues)
 - [Documentation](./docs/)
 
 ### Contributors
@@ -277,5 +277,5 @@ Future releases will be documented here.
 
 ---
 
-[0.2.0]: https://github.com/fabriquant-labs/fabriquant/releases/tag/v0.2.0
-[0.1.0]: https://github.com/fabriquant-labs/fabriquant/releases/tag/v0.1.0
+[0.2.0]: https://github.com/fabrknt/fabrknt/releases/tag/v0.2.0
+[0.1.0]: https://github.com/fabrknt/fabrknt/releases/tag/v0.1.0

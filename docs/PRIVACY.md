@@ -27,7 +27,7 @@ ZK Compression provides dramatic cost reductions:
 ## Installation
 
 ```bash
-npm install @fabriquant/sdk
+npm install @fabrknt/sdk
 ```
 
 ## Quick Start
@@ -35,7 +35,7 @@ npm install @fabriquant/sdk
 ### Private Transaction Execution
 
 ```typescript
-import { Fabriquant, Guard, FabricCore } from "@fabriquant/sdk";
+import { Fabriquant, Guard, FabricCore } from "@fabrknt/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
@@ -62,7 +62,7 @@ console.log("Compression Enabled:", result.privacyMetadata?.compressionEnabled);
 ### Cost Estimation
 
 ```typescript
-import { FabricCore } from "@fabriquant/sdk";
+import { FabricCore } from "@fabrknt/sdk";
 
 // Estimate cost savings for 1000 transactions
 const savings = FabricCore.estimateCompressionSavings(1000);
@@ -76,7 +76,7 @@ console.log("Savings Percentage:", savings.savingsPercent.toFixed(2), "%");
 ### Optimized Private Transaction
 
 ```typescript
-import { FabricCore, Fabriquant } from "@fabriquant/sdk";
+import { FabricCore, Fabriquant } from "@fabrknt/sdk";
 
 const tx = {
     id: "tx-001",
@@ -116,7 +116,7 @@ interface PrivacyConfig {
 ### FabriquantConfig with Privacy
 
 ```typescript
-import { Fabriquant } from "@fabriquant/sdk";
+import { Fabriquant } from "@fabrknt/sdk";
 
 const fabriquant = new Fabriquant({
     network: "mainnet-beta",
@@ -221,7 +221,7 @@ Estimate cost savings from ZK Compression.
 Guard automatically validates privacy requirements:
 
 ```typescript
-import { Guard } from "@fabriquant/sdk";
+import { Guard } from "@fabrknt/sdk";
 
 const guard = new Guard();
 
@@ -364,7 +364,7 @@ See [`examples/pulsar-arbor-integration.ts`](../examples/pulsar-arbor-integratio
 
 ## Support
 
--   GitHub Issues: https://github.com/fabriquant-labs/fabriquant/issues
--   Documentation: https://github.com/fabriquant-labs/fabriquant
+-   GitHub Issues: https://github.com/fabrknt/fabrknt/issues
+-   Documentation: https://github.com/fabrknt/fabrknt
 -   Twitter: https://x.com/psyto
 -   Privacy Repository: https://github.com/psyto/arbor

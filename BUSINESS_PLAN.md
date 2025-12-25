@@ -431,7 +431,7 @@ To become the standard cross-chain execution layer for autonomous agents and ins
 #### Developer Adoption (Self-Service)
 
 1. Discover via GitHub/docs
-2. Install SDK (`npm install @fabriquant/sdk`)
+2. Install SDK (`npm install @fabrknt/sdk`)
 3. Follow quickstart guide
 4. Join community for support
 5. Upgrade to Enterprise (if needed)
@@ -1530,10 +1530,10 @@ class Guard {
 ## Contact Information
 
 **Company**: Fabriquant  
-**Website**: https://github.com/fabriquant-labs/fabriquant  
+**Website**: https://github.com/fabrknt/fabrknt  
 **Email**: [Contact Email]  
 **Twitter**: [@psyto](https://x.com/psyto)  
-**GitHub**: [fabriquant-labs/fabriquant](https://github.com/fabriquant-labs/fabriquant)
+**GitHub**: [fabrknt/fabrknt](https://github.com/fabrknt/fabrknt)
 
 ---
 

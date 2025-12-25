@@ -20,7 +20,7 @@
  *
  * @example
  * ```typescript
- * import { GridTradingPattern, Guard } from '@fabriquant/sdk';
+ * import { GridTradingPattern, Guard } from '@fabrknt/sdk';
  *
  * const pattern = new GridTradingPattern({
  *   name: 'SOL-USDC Grid',

@@ -117,7 +117,7 @@ function buildKnowledgeBase() {
 
   const kb = {
     metadata: {
-      projectName: packageInfo.name || '@fabriquant/sdk',
+      projectName: packageInfo.name || '@fabrknt/sdk',
       version: packageInfo.version || '0.2.0',
       description: packageInfo.description || '',
       keywords: packageInfo.keywords || [],
@@ -151,8 +151,8 @@ function buildKnowledgeBase() {
         'Privacy via ZK Compression',
         'Cross-chain abstraction (in progress)'
       ],
-      installation: 'npm install @fabriquant/sdk',
-      repository: 'https://github.com/fabriquant-labs/fabriquant',
+      installation: 'npm install @fabrknt/sdk',
+      repository: 'https://github.com/fabrknt/fabrknt',
       twitter: '@psyto',
       license: 'MIT - Open Source'
     }

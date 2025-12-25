@@ -11,7 +11,7 @@ import {
     Severity,
     type Transaction,
     type TransactionInstruction,
-} from "@fabriquant/sdk";
+} from "@fabrknt/sdk";
 
 const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 

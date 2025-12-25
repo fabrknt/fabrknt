@@ -17,7 +17,7 @@ Risk (formerly Fabric Pulse/Pulsar) is the Risk Oracle component of Fabriquant, 
 ## Installation
 
 ```bash
-npm install @fabriquant/sdk
+npm install @fabrknt/sdk
 ```
 
 ## Quick Start
@@ -25,7 +25,7 @@ npm install @fabriquant/sdk
 ### Basic Risk Assessment
 
 ```typescript
-import { Pulsar } from "@fabriquant/sdk";
+import { Pulsar } from "@fabrknt/sdk";
 
 // Note: The class is still named 'Pulsar' in code, but represents Risk
 // Get risk metrics for a single asset
@@ -42,7 +42,7 @@ console.log("Oracle Integrity:", metrics.oracleIntegrity);
 ### Batch Risk Assessment
 
 ```typescript
-import { Pulsar } from "@fabriquant/sdk"; // Risk
+import { Pulsar } from "@fabrknt/sdk"; // Risk
 
 const assetAddresses = [
     "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
@@ -103,7 +103,7 @@ Risk uses an in-memory cache to reduce API calls and improve performance.
 ### Cache Management
 
 ```typescript
-import { Pulsar } from "@fabriquant/sdk";
+import { Pulsar } from "@fabrknt/sdk";
 
 // Get cache statistics
 const stats = Pulsar.getCacheStats();
@@ -128,7 +128,7 @@ const metrics = await Pulsar.getRiskMetrics(assetAddress, {
 Risk integrates automatically with Guard when enabled in the configuration:
 
 ```typescript
-import { Guard } from "@fabriquant/sdk";
+import { Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({
     pulsar: {
@@ -307,6 +307,6 @@ Get cache statistics.
 
 ## Support
 
--   GitHub Issues: https://github.com/fabriquant-labs/fabriquant/issues
--   Documentation: https://github.com/fabriquant-labs/fabriquant
+-   GitHub Issues: https://github.com/fabrknt/fabrknt/issues
+-   Documentation: https://github.com/fabrknt/fabrknt
 -   Twitter: https://x.com/psyto

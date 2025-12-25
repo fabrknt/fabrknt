@@ -35,7 +35,7 @@ The Chain Abstraction Layer enables Fabriquant's portable components (Guard, Ris
 ### Creating Chain Adapters
 
 ```typescript
-import { createChainAdapter, SolanaAdapter } from '@fabriquant/sdk';
+import { createChainAdapter, SolanaAdapter } from '@fabrknt/sdk';
 
 // Create Solana adapter
 const solanaAdapter = createChainAdapter({
@@ -54,8 +54,8 @@ const adapter = new SolanaAdapter({
 ### Using Guard with Chain Abstraction
 
 ```typescript
-import { Guard, createChainAdapter } from '@fabriquant/sdk';
-import type { UnifiedTransaction } from '@fabriquant/sdk';
+import { Guard, createChainAdapter } from '@fabrknt/sdk';
+import type { UnifiedTransaction } from '@fabrknt/sdk';
 
 // Create chain adapter
 const adapter = createChainAdapter({

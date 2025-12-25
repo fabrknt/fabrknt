@@ -11,7 +11,7 @@ import {
     Severity,
     type Transaction,
     type ValidationResult,
-} from "@fabriquant/sdk";
+} from "@fabrknt/sdk";
 
 // Example 1: Basic Guard with Default Configuration
 function basicGuard() {

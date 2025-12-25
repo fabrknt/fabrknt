@@ -19,13 +19,13 @@ Guard is the quality control layer of the Fabriquant SDK, designed to prevent un
 ## Installation
 
 ```bash
-npm install @fabriquant/sdk
+npm install @fabrknt/sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { Guard } from "@fabriquant/sdk";
+import { Guard } from "@fabrknt/sdk";
 
 // Create a Guard with default configuration
 const guard = new Guard();
@@ -293,7 +293,7 @@ Clears the warning history.
 ### Basic Validation
 
 ```typescript
-import { Guard } from "@fabriquant/sdk";
+import { Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({
     maxSlippage: 1.0,
@@ -316,7 +316,7 @@ if (result.isValid) {
 ### Risk Assessment
 
 ```typescript
-import { Guard } from "@fabriquant/sdk";
+import { Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({
     pulsar: {
@@ -442,7 +442,7 @@ const result = await guard.validateTransaction(privateTx);
 ### Standard Execution
 
 ```typescript
-import { Fabriquant, Guard } from "@fabriquant/sdk";
+import { Fabriquant, Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({
     maxSlippage: 1.0,
@@ -456,7 +456,7 @@ await Fabriquant.execute(tx, { with: guard });
 ### Execution with Risk Assessment
 
 ```typescript
-import { Fabriquant, Guard } from "@fabriquant/sdk";
+import { Fabriquant, Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({
     pulsar: {
@@ -483,7 +483,7 @@ const result = await Fabriquant.execute(tx, { with: guard });
 ### Private Transaction Execution
 
 ```typescript
-import { Fabriquant, Guard } from "@fabriquant/sdk";
+import { Fabriquant, Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({ riskTolerance: "moderate" });
 
@@ -527,14 +527,14 @@ import type {
     ValidationRule,
     PulsarConfig,
     RiskMetrics,
-} from "@fabriquant/sdk";
+} from "@fabrknt/sdk";
 
 // Pattern IDs
-import { PatternId } from "@fabriquant/sdk";
+import { PatternId } from "@fabrknt/sdk";
 // PatternId.MintKill, FreezeKill, SignerMismatch, DangerousClose
 
 // Severity Levels
-import { Severity } from "@fabriquant/sdk";
+import { Severity } from "@fabrknt/sdk";
 // Severity.Critical, Warning, Alert
 ```
 
@@ -569,6 +569,6 @@ MIT License - see [LICENSE](../LICENSE) for details.
 
 ## Support
 
--   GitHub Issues: https://github.com/fabriquant-labs/fabriquant/issues
--   Documentation: https://github.com/fabriquant-labs/fabriquant
+-   GitHub Issues: https://github.com/fabrknt/fabrknt/issues
+-   Documentation: https://github.com/fabrknt/fabrknt
 -   Twitter: https://x.com/psyto

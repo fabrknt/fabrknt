@@ -43,7 +43,7 @@ import type { ChainAdapter, ChainAdapterConfig } from "./adapter";
  *
  * @example
  * ```typescript
- * import { createChainAdapter } from '@fabriquant/sdk/chain';
+ * import { createChainAdapter } from '@fabrknt/sdk/chain';
  *
  * const solanaAdapter = createChainAdapter({
  *   chain: 'solana',

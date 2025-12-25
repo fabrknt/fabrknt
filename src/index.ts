@@ -1,5 +1,5 @@
 /**
- * @fabriquant/sdk - The Precision Execution Stack for Solana
+ * @fabrknt/sdk - The Precision Execution Stack for Solana
  *
  * Engineered for Parallelism. Built for Autonomy. Woven for Speed.
  *
@@ -8,7 +8,7 @@
  * DeFi protocols to execute complex transactions with absolute precision.
  *
  * @packageDocumentation
- * @module @fabriquant/sdk
+ * @module @fabrknt/sdk
  */
 
 /**
@@ -17,7 +17,7 @@
  *
  * @example
  * ```typescript
- * import { Fabriquant, Guard } from "@fabriquant/sdk";
+ * import { Fabriquant, Guard } from "@fabrknt/sdk";
  *
  * const guard = new Guard({ maxSlippage: 0.1, mode: "block" });
  * await Fabriquant.execute(transaction, { with: guard });
@@ -33,7 +33,7 @@ export { Fabriquant } from "./core/fabriquant";
  *
  * @example
  * ```typescript
- * import { Guard } from "@fabriquant/sdk";
+ * import { Guard } from "@fabrknt/sdk";
  *
  * const guard = new Guard({
  *   maxSlippage: 0.1,
@@ -53,7 +53,7 @@ export { Guard, PatternId, Severity } from "./guard";
  *
  * @example
  * ```typescript
- * import { Loom } from "@fabriquant/sdk";
+ * import { Loom } from "@fabrknt/sdk";
  *
  * const tx = await Loom.weave({
  *   type: "MULTI_ROUTE_SWAP",
@@ -74,7 +74,7 @@ export { Loom } from "./loom";
  *
  * @example
  * ```typescript
- * import { FabricCore } from "@fabriquant/sdk";
+ * import { FabricCore } from "@fabrknt/sdk";
  *
  * const optimized = FabricCore.optimize(tx, {
  *   enablePrivacy: true,
@@ -98,7 +98,7 @@ export { FabricCore } from "./fabric";
  *
  * @example
  * ```typescript
- * import { Pulsar } from "@fabriquant/sdk";
+ * import { Pulsar } from "@fabrknt/sdk";
  *
  * const pulsar = new Pulsar({
  *   apiKey: "your-api-key",
@@ -162,7 +162,7 @@ export type {
  *
  * @example
  * ```typescript
- * import { GridTradingPattern, Guard } from "@fabriquant/sdk";
+ * import { GridTradingPattern, Guard } from "@fabrknt/sdk";
  *
  * const pattern = new GridTradingPattern({
  *   name: 'SOL-USDC Grid',
@@ -231,7 +231,7 @@ export type {
  *
  * @example
  * ```typescript
- * import { createChainAdapter, SolanaAdapter } from "@fabriquant/sdk";
+ * import { createChainAdapter, SolanaAdapter } from "@fabrknt/sdk";
  *
  * // Create Solana adapter
  * const solanaAdapter = createChainAdapter({
@@ -270,7 +270,7 @@ export type {
  *
  * @example
  * ```typescript
- * import { JupiterAdapter, PriceFeedService, COMMON_TOKENS } from "@fabriquant/sdk";
+ * import { JupiterAdapter, PriceFeedService, COMMON_TOKENS } from "@fabrknt/sdk";
  *
  * // Create Jupiter adapter
  * const jupiter = new JupiterAdapter();

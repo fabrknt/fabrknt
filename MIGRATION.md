@@ -26,7 +26,7 @@ The v0.1.0 release includes a complete rebranding with simplified, clearer compo
 ```json
 {
   "dependencies": {
-    "@fabriquant/sdk": "^0.1.0"
+    "@fabrknt/sdk": "^0.1.0"
   }
 }
 ```
@@ -40,7 +40,7 @@ The v0.1.0 release includes a complete rebranding with simplified, clearer compo
 
 2. **Install the new package:**
    ```bash
-   npm install @fabriquant/sdk
+   npm install @fabrknt/sdk
    ```
 
 3. **Update import statements:**
@@ -49,7 +49,7 @@ The v0.1.0 release includes a complete rebranding with simplified, clearer compo
    import { Guard, Pulsar } from "@fabricant/sdk";
 
    // New
-   import { Guard, Pulsar } from "@fabriquant/sdk";
+   import { Guard, Pulsar } from "@fabrknt/sdk";
    ```
 
 ## Component Naming Changes
@@ -59,7 +59,7 @@ The v0.1.0 release includes a complete rebranding with simplified, clearer compo
 | Category | Old Name | New Name | Class/Export | Backward Compatible? |
 |----------|----------|----------|--------------|---------------------|
 | **Project** | Fabricant | Fabriquant | - | ❌ Breaking change |
-| **Package** | `@fabricant/sdk` | `@fabriquant/sdk` | - | ❌ Breaking change |
+| **Package** | `@fabricant/sdk` | `@fabrknt/sdk` | - | ❌ Breaking change |
 | **Risk Component** | Fabric Pulse | Risk | `Pulsar` | ✅ Yes (class name unchanged) |
 | **Privacy Component** | Fabric Weave | Privacy | - | ✅ Yes (identifier unchanged) |
 | **Suite Name** | Fabricant Suite | Fabriquant Suite | - | ❌ Documentation only |
@@ -80,7 +80,7 @@ The class is still exported as `Pulsar`, so your existing code continues to work
 
 ```typescript
 // This works in both old and new versions
-import { Pulsar } from "@fabriquant/sdk";
+import { Pulsar } from "@fabrknt/sdk";
 
 const pulsar = new Pulsar({
   apiKey: "your-api-key",
@@ -106,7 +106,7 @@ The provider identifier is unchanged, so your existing code works:
 
 ```typescript
 // This works in both old and new versions
-import { FabricCore } from "@fabriquant/sdk";
+import { FabricCore } from "@fabrknt/sdk";
 
 const tx = FabricCore.optimize(transaction, {
   enablePrivacy: true,
@@ -143,7 +143,7 @@ import { Fabricant } from "@fabricant/sdk";
 await Fabricant.execute(tx, { with: guard });
 
 // New
-import { Fabriquant } from "@fabriquant/sdk";
+import { Fabriquant } from "@fabrknt/sdk";
 await Fabriquant.execute(tx, { with: guard });
 ```
 
@@ -166,7 +166,7 @@ const result = await Fabricant.execute(transaction, { with: guard });
 
 **After (v0.1.0):**
 ```typescript
-import { Fabriquant, Guard } from "@fabriquant/sdk";
+import { Fabriquant, Guard } from "@fabrknt/sdk";
 
 const guard = new Guard({
   maxSlippage: 0.1,
@@ -178,7 +178,7 @@ const result = await Fabriquant.execute(transaction, { with: guard });
 ```
 
 **Changes:**
-1. ✅ Package name: `@fabricant/sdk` → `@fabriquant/sdk`
+1. ✅ Package name: `@fabricant/sdk` → `@fabrknt/sdk`
 2. ✅ Class name: `Fabricant` → `Fabriquant`
 
 ### Example 2: Risk Integration (Pulsar)
@@ -199,7 +199,7 @@ const guard = new Guard({
 
 **After (v0.1.0):**
 ```typescript
-import { Guard, Pulsar } from "@fabriquant/sdk";
+import { Guard, Pulsar } from "@fabrknt/sdk";
 
 // Guard with Risk enabled (class still named Pulsar for compatibility)
 const guard = new Guard({
@@ -212,7 +212,7 @@ const guard = new Guard({
 ```
 
 **Changes:**
-1. ✅ Package name: `@fabricant/sdk` → `@fabriquant/sdk`
+1. ✅ Package name: `@fabricant/sdk` → `@fabrknt/sdk`
 2. ✅ Config key `pulsar` remains unchanged
 3. ✅ `Pulsar` class name remains unchanged
 4. 📝 Documentation now calls this "Risk" instead of "Fabric Pulse"
@@ -236,7 +236,7 @@ const result = await Fabricant.executePrivate(optimized, {
 
 **After (v0.1.0):**
 ```typescript
-import { Fabriquant, FabricCore } from "@fabriquant/sdk";
+import { Fabriquant, FabricCore } from "@fabrknt/sdk";
 
 // Optimize with Privacy (provider identifier remains "arbor")
 const optimized = FabricCore.optimize(tx, {
@@ -250,7 +250,7 @@ const result = await Fabriquant.executePrivate(optimized, {
 ```
 
 **Changes:**
-1. ✅ Package name: `@fabricant/sdk` → `@fabriquant/sdk`
+1. ✅ Package name: `@fabricant/sdk` → `@fabrknt/sdk`
 2. ✅ Class name: `Fabricant` → `Fabriquant`
 3. ✅ Provider identifier `"arbor"` remains unchanged
 4. 📝 Documentation now calls this "Privacy" instead of "Fabric Weave"
@@ -290,7 +290,7 @@ const result = await Fabricant.executePrivate(optimized, {
 
 **After (v0.1.0):**
 ```typescript
-import { Fabriquant, Guard, Pulsar, FabricCore, Loom } from "@fabriquant/sdk";
+import { Fabriquant, Guard, Pulsar, FabricCore, Loom } from "@fabrknt/sdk";
 
 // Initialize Guard with Risk (class still named Pulsar)
 const guard = new Guard({
@@ -320,7 +320,7 @@ const result = await Fabriquant.executePrivate(optimized, {
 ```
 
 **Changes:**
-1. ✅ Package name: `@fabricant/sdk` → `@fabriquant/sdk`
+1. ✅ Package name: `@fabricant/sdk` → `@fabrknt/sdk`
 2. ✅ Class name: `Fabricant` → `Fabriquant`
 3. ✅ All other APIs remain backward compatible
 
@@ -329,12 +329,12 @@ const result = await Fabriquant.executePrivate(optimized, {
 Use this checklist to ensure you've migrated everything:
 
 ### Package & Dependencies
-- [ ] Updated `package.json` to use `@fabriquant/sdk` instead of `@fabricant/sdk`
+- [ ] Updated `package.json` to use `@fabrknt/sdk` instead of `@fabricant/sdk`
 - [ ] Ran `npm install` to install the new package
 - [ ] Verified no references to old package name in `package-lock.json`
 
 ### Code Changes
-- [ ] Updated all import statements from `@fabricant/sdk` to `@fabriquant/sdk`
+- [ ] Updated all import statements from `@fabricant/sdk` to `@fabrknt/sdk`
 - [ ] Renamed `Fabricant` class to `Fabriquant` in all files
 - [ ] Verified `Pulsar` class usage (no changes needed)
 - [ ] Verified `"arbor"` provider identifier usage (no changes needed)
@@ -362,7 +362,7 @@ We've designed this migration to minimize breaking changes:
 - Configuration object structures
 
 ### What's Breaking ❌
-- Package name: `@fabricant/sdk` → `@fabriquant/sdk`
+- Package name: `@fabricant/sdk` → `@fabrknt/sdk`
 - Main class: `Fabricant` → `Fabriquant`
 
 ## Why the Rebrand?
@@ -380,7 +380,7 @@ If you encounter issues during migration:
 
 1. **Check the examples**: See `examples/` directory for updated code samples
 2. **Review documentation**: See `docs/` for detailed component documentation
-3. **Open an issue**: [GitHub Issues](https://github.com/fabriquant-labs/fabriquant/issues)
+3. **Open an issue**: [GitHub Issues](https://github.com/fabrknt/fabrknt/issues)
 4. **Check the changelog**: See [CHANGELOG.md](./CHANGELOG.md) for complete list of changes
 
 ## Future Deprecations
