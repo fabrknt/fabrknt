@@ -1,6 +1,6 @@
 {
     "name": "@fabrknt/sdk",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "The Precision Execution Stack — Solana-First, Cross-Chain Enabled - Engineered for Parallelism, Built for Autonomy, Woven for Speed. Now with real DEX integration via Jupiter V6.",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
