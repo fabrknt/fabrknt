@@ -5,6 +5,76 @@ All notable changes to the Fabrknt SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-12-25
+
+### BREAKING CHANGES
+
+This release completes the rebrand from **Fabriquant** to **Fabrknt** with breaking changes to class names and type definitions.
+
+#### Class and Type Renames
+
+- **BREAKING**: Main orchestration class renamed: `Fabriquant` → `Fabrknt`
+- **BREAKING**: Configuration type renamed: `FabriquantConfig` → `FabrkntConfig`
+- **BREAKING**: Core module file renamed: `src/core/fabriquant.ts` → `src/core/fabrknt.ts`
+- **BREAKING**: Test file renamed: `tests/fabriquant.test.ts` → `tests/fabrknt.test.ts`
+
+#### Migration Required
+
+**Before (v0.2.0):**
+```typescript
+import { Fabriquant, Guard } from "@fabrknt/sdk";
+
+const fabriquant = new Fabriquant({
+    network: "mainnet-beta"
+});
+
+await Fabriquant.execute(tx, { with: guard });
+```
+
+**After (v0.3.0):**
+```typescript
+import { Fabrknt, Guard } from "@fabrknt/sdk";
+
+const fabrknt = new Fabrknt({
+    network: "mainnet-beta"
+});
+
+await Fabrknt.execute(tx, { with: guard });
+```
+
+#### What Changed
+
+- All references to `Fabriquant` class replaced with `Fabrknt`
+- All references to `FabriquantConfig` type replaced with `FabrkntConfig`
+- Import paths updated from `./core/fabriquant` to `./core/fabrknt`
+- Variable names in examples updated to use `fabrknt` convention
+- All documentation, comments, and marketing materials updated
+
+#### What Stayed the Same
+
+- ✅ Package name remains `@fabrknt/sdk` (changed in v0.2.0)
+- ✅ All other class names unchanged (`Guard`, `Pulsar`, `FabricCore`, etc.)
+- ✅ All API methods and functionality remain identical
+- ✅ All configuration options unchanged
+- ✅ 100% test coverage maintained (417 tests passing)
+
+### Documentation
+
+- Updated MIGRATION.md with complete migration guide
+- Updated all code examples in README.md
+- Updated all JSDoc comments and inline documentation
+- Updated marketing automation content templates
+
+### Repository
+
+- Organization: `fabrknt/fabrknt`
+- Package: `@fabrknt/sdk`
+- Version: `0.3.0`
+
+**Migration Guide**: See [MIGRATION.md](./MIGRATION.md) for detailed migration instructions.
+
+---
+
 ## [0.1.0] - 2025-12-22
 
 ### Major Rebranding
@@ -277,5 +347,6 @@ Future releases will be documented here.
 
 ---
 
+[0.3.0]: https://github.com/fabrknt/fabrknt/releases/tag/v0.3.0
 [0.2.0]: https://github.com/fabrknt/fabrknt/releases/tag/v0.2.0
 [0.1.0]: https://github.com/fabrknt/fabrknt/releases/tag/v0.1.0
