@@ -1,21 +1,20 @@
 version: 1
-applications:
-  - appRoot: website
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - echo "Preparing static site deployment"
-        build:
-          commands:
-            - echo "No build required - static site"
-        postBuild:
-          commands:
-            - echo "Build completed successfully"
-      artifacts:
-        baseDirectory: /
-        files:
-          - "**/*"
-      cache:
-        paths: []
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Preparing static site deployment"
+        - cd website
+    build:
+      commands:
+        - echo "No build required - static site"
+    postBuild:
+      commands:
+        - echo "Build completed successfully"
+  artifacts:
+    baseDirectory: website
+    files:
+      - "**/*"
+  cache:
+    paths: []
 
