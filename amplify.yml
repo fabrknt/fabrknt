@@ -18,10 +18,10 @@ frontend:
   artifacts:
     baseDirectory: /
     files:
-      - "**/*"
-      - "!website/**/*"
-      - "!.git/**/*"
-      - "!README.md"
+      - "index.html"
+      - "assets/**/*"
+      - "CNAME"
+      - ".nojekyll"
   cache:
     paths: []
 
